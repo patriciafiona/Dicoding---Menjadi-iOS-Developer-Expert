@@ -3,8 +3,8 @@ PODS:
   - AlamofireObjectMapper (6.2.0):
     - Alamofire (= 5.0.0-rc.2)
     - ObjectMapper (~> 3.5.1)
-  - Kingfisher (7.3.2)
-  - lottie-ios (3.4.3)
+  - Kingfisher (7.4.1)
+  - lottie-ios (3.5.0)
   - ObjectMapper (3.5.3)
   - Realm (10.29.0):
     - Realm/Headers (= 10.29.0)
@@ -39,8 +39,8 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
   AlamofireObjectMapper: 74d1440c92c42bbcc2b5f4dc81654ac095ec669f
-  Kingfisher: 0086ad83719761ba9b2cdaf6ef4d5b4878cbae23
-  lottie-ios: 9ae750cdc7820fecbd3c2f0cfc493038208fcdc4
+  Kingfisher: cd762a593a61b2fbecf7645c00f9a801a3ebfc9c
+  lottie-ios: c55158d67d0629a260625cc2ded2052b829e3c3e
   ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
   Realm: 5596770daeff1ad76c8eb10d5947dc10472da779
   RealmSwift: 35d8d318b7e5a8dbc7096c2a243184e4d19abcc0

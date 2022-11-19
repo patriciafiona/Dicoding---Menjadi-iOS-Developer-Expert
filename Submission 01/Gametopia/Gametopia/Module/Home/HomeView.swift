@@ -7,20 +7,39 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomeView: View {
+  @ObservedObject var presenter: HomePresenter
+  
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView{
+            TabView {
+               HomeTab(presenter: presenter)
+                 .tabItem {
+                    Image(systemName: "house")
+                     .tint(Color.indigo)
+                    Text("Home")
+               }
+               SearchTab(presenter: presenter)
+                 .tabItem {
+                    Image(systemName: "magnifyingglass")
+                     .tint(Color.indigo)
+                    Text("Search")
+                     
+                 }
+                FavoriteTab(presenter: presenter)
+                  .tabItem {
+                     Image(systemName: "heart.circle.fill")
+                      .tint(Color.indigo)
+                     Text("Favorites")
+               }
+                ProfileTab()
+                  .tabItem {
+                     Image(systemName: "person.circle")
+                      .tint(Color.indigo)
+                     Text("Profile")
+               }
+            }
         }
-        .padding()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        .navigationBarBackButtonHidden(true)
     }
 }
