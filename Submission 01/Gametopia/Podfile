@@ -1,0 +1,19 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Gametopia' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Gametopia
+  pod 'Alamofire'
+  pod 'SwiftyJSON'
+  pod 'AlamofireObjectMapper'
+  pod 'Kingfisher', '~> 7.0'
+  pod 'SkeletonUI'
+  
+  pod 'Realm', '=10.29.0'
+  pod 'RealmSwift', '=10.29.0'
+  pod 'lottie-ios'
+
+end
