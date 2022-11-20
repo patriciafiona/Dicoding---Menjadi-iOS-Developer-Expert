@@ -8,12 +8,11 @@ target 'Gametopia' do
   # Pods for Gametopia
   pod 'Alamofire'
   pod 'SwiftyJSON'
-  pod 'AlamofireObjectMapper'
   pod 'Kingfisher', '~> 7.0'
   pod 'SkeletonUI'
   
-  pod 'Realm', '=10.29.0'
-  pod 'RealmSwift', '=10.29.0'
+  pod 'Realm'
+  pod 'RealmSwift'
   pod 'lottie-ios'
 
 end

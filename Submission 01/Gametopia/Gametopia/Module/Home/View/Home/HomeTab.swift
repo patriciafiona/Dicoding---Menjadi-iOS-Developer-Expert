@@ -34,19 +34,21 @@ struct HomeTab: View {
           ScrollView(.vertical, showsIndicators: false){
             VStack(alignment: .leading){
               //Top bar section
-              HStack{
-                Text("Gametopia")
-                  .font(
-                    Font.custom(
-                      "VerminVibesV",
-                      size: 24
+              Group{
+                HStack{
+                  Text("Gametopia")
+                    .font(
+                      Font.custom(
+                        "VerminVibesV",
+                        size: 24
+                      )
                     )
-                  )
-                Spacer()
-                Image("user")
-                  .resizable()
-                  .frame(width: 40, height: 40)
-                  .clipShape(Circle())
+                  Spacer()
+                  Image("user")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+                }
               }
               
               Spacer().frame(height: 20)
@@ -57,38 +59,44 @@ struct HomeTab: View {
               Spacer().frame(height: 20)
               
               //Discovery section
-              HStack {
-                TitleSubtitle(title: "Discovery", subtitle: "Based on best rating")
-                Spacer()
-                Button(action: {
-                  //TODO:: GO TO DISCOVERY BY RATING
-                }) {
-                  Image(
-                    systemName: "arrow.right.circle"
-                  )
-                  .tint(Color.yellow)
-                }
-              }
-              
-              ScrollView(.horizontal, showsIndicators: false){
-                LazyHStack{
-                  ForEach(
-                    self.presenter.games,
-                    id: \.id
-                  ) { game in
-                    ZStack {
-                      self.presenter.linkBuilder(for: game) {
-                        GameItem(game: game)
-                      }.buttonStyle(PlainButtonStyle())
-                    }.padding(8)
+              Group{
+                HStack {
+                  TitleSubtitle(title: "Discovery", subtitle: "Based on best rating")
+                  Spacer()
+                  Button(action: {
+                    //TODO:: GO TO DISCOVERY BY RATING
+                  }) {
+                    Image(
+                      systemName: "arrow.right.circle"
+                    )
+                    .tint(Color.yellow)
                   }
                 }
+                
+                ScrollView(.horizontal, showsIndicators: false){
+                  LazyHStack{
+                    ForEach(
+                      self.presenter.games,
+                      id: \.id
+                    ) { game in
+                      ZStack {
+                        self.presenter.linkBuilder(for: game) {
+                          GameItem(game: game)
+                        }.buttonStyle(PlainButtonStyle())
+                      }.padding(8)
+                    }
+                  }
+                }.frame(maxHeight: 235)
               }
               
               Spacer().frame(height: 20)
               
               //Genre section
-              TitleSubtitle(title: "Genres", subtitle: "Find your game genre here")
+              Group{
+                TitleSubtitle(title: "Genres", subtitle: "Find your game genre here")
+                GenreGridView(presenter: self.presenter)
+              }
+              
               
               Spacer().frame(height: 20)
               
@@ -110,12 +118,36 @@ struct HomeTab: View {
         if self.presenter.games.count == 0 {
           self.presenter.getGames()
         }
+        if self.presenter.genres.count == 0 {
+          self.presenter.getGenres()
+        }
       }
     }
   }
 }
 
 struct HomeCarousel: View {
+  @State private var orientation = UIDeviceOrientation.unknown
+  
+  var body: some View {
+    Group {
+        if orientation.isLandscape {
+          HomeCarouselContent()
+          .frame(width: UIScreen.main.bounds.width - 150, height: 300, alignment: .center)
+          .cornerRadius(20)
+        } else {
+          HomeCarouselContent()
+          .frame(width: UIScreen.main.bounds.width - 40, height: 200, alignment: .center)
+          .cornerRadius(20)
+        }
+    }
+    .onRotate { newOrientation in
+        orientation = newOrientation
+    }
+  }
+}
+
+struct HomeCarouselContent: View {
   var body: some View {
     GeometryReader { geometry in
       ImageCarouselTemplate(numberOfImages: 5) {
@@ -146,7 +178,24 @@ struct HomeCarousel: View {
           .clipped()
       }
     }
-    .frame(width: UIScreen.main.bounds.width - 40, height: 200, alignment: .center)
-    .cornerRadius(20)
+  }
+}
+
+struct GenreGridView: View{
+  @State var presenter: HomePresenter
+  var body: some View {
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    ScrollView {
+        LazyVGrid(columns: columns, spacing: 10) {
+            ForEach(presenter.genres, id: \.id) { genre in
+              GenreItem(genre: genre)
+            }
+        }
+        .padding(.horizontal)
+    }
+    .frame(maxHeight: 500)
   }
 }

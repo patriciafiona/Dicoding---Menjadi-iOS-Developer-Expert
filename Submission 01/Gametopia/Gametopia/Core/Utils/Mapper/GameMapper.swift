@@ -25,7 +25,7 @@ final class GameMapper {
         reviews_count: result.reviews_count ?? 0,
         community_rating: result.community_rating ?? 0,
         platforms: (result.platforms ?? nil) as? [PlatformModel],
-        genres: (result.genres ?? nil) as? [GenreModel],
+        genres: (result.genres ?? nil) as? [GenreInGameModel],
         parent_platforms: (result.parent_platforms ?? nil) as? [ParentPlatformPlatformModel]
       )
     }

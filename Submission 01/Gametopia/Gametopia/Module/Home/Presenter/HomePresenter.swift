@@ -14,6 +14,7 @@ class HomePresenter: ObservableObject {
   private let homeUseCase: HomeUseCase
 
   @Published var games: [GameModel] = []
+  @Published var genres: [GenreModel] = []
   @Published var errorMessage: String = ""
   @Published var loadingState: Bool = false
   
@@ -29,13 +30,32 @@ class HomePresenter: ObservableObject {
         switch completion {
         case .failure:
           self.errorMessage = String(describing: completion)
-          print("Get from API ERROR: \(completion)")
+          print("Get Discovey from API ERROR: \(completion)")
         case .finished:
           self.loadingState = false
-          print("Get from API FINISHED")
+          print("Get Discovey from API FINISHED")
         }
       }, receiveValue: { games in
         self.games = games
+      })
+      .store(in: &cancellables)
+  }
+  
+  func getGenres() {
+    loadingState = true
+    homeUseCase.getListGenres()
+      .receive(on: RunLoop.main)
+      .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure:
+          self.errorMessage = String(describing: completion)
+          print("Get Genre ERROR: \(completion)")
+        case .finished:
+          self.loadingState = false
+          print("Get Genre FINISHED")
+        }
+      }, receiveValue: { genres in
+        self.genres = genres
       })
       .store(in: &cancellables)
   }

@@ -17,7 +17,7 @@ struct GameModel: Equatable {
     let reviews_count: Int?
     let community_rating: Int?
     let platforms: [PlatformModel]?
-    let genres: [GenreModel]?
+    let genres: [GenreInGameModel]?
     let parent_platforms: [ParentPlatformPlatformModel]?
 }
 
@@ -40,7 +40,7 @@ struct ParentPlatformPlatformModel: Equatable, Identifiable {
 }
 
 // MARK: - Genre
-struct GenreModel: Equatable, Identifiable {
+struct GenreInGameModel: Equatable, Identifiable {
     let id: Int?
     let name, slug: String?
     let games_count: Int?

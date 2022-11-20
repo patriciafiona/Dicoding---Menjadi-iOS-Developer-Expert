@@ -17,7 +17,7 @@ let page = "1"
 protocol RemoteDataSourceProtocol: AnyObject {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameResult], Error>
   func getFewDiscoveryGame() -> AnyPublisher<[GameResult], Error>
-//  func getListGenres() -> AnyPublisher<[GenreResponse], Error>
+  func getListGenres() -> AnyPublisher<[GenreResult], Error>
 //  func getListDevelopers() -> AnyPublisher<[DeveloperResponse], Error>
 //  func getSearchResults(keyword: String) -> AnyPublisher<[SearchResponse], Error>
 //  func getGameDetails(id: Int) -> AnyPublisher<[DetailGameResponse], Error>
@@ -72,11 +72,25 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
       }
     }.eraseToAnyPublisher()
   }
-}
-
-extension String {
-    func toJSON() -> Any? {
-        guard let data = self.data(using: .utf8, allowLossyConversion: false) else { return nil }
-        return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-    }
+  
+  func getListGenres() -> AnyPublisher<[GenreResult], Error> {
+    return Future<[GenreResult], Error> { completion in
+      if let url = URL(string: Endpoints.Gets.genres.url) {
+        AF.request(
+          url,
+          method: .get,
+          parameters: ["key": apiKey]
+        )
+          .validate()
+          .responseDecodable(of: GenreResponse.self) { response in
+            switch response.result {
+              case .success(let value):
+                completion(.success(value.results!))
+              case .failure:
+                completion(.failure(URLError.invalidResponse))
+            }
+          }
+      }
+    }.eraseToAnyPublisher()
+  }
 }

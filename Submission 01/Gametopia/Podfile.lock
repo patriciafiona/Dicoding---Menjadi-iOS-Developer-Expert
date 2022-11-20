@@ -1,52 +1,43 @@
 PODS:
-  - Alamofire (5.0.0-rc.2)
-  - AlamofireObjectMapper (6.2.0):
-    - Alamofire (= 5.0.0-rc.2)
-    - ObjectMapper (~> 3.5.1)
+  - Alamofire (5.6.2)
   - Kingfisher (7.4.1)
   - lottie-ios (3.5.0)
-  - ObjectMapper (3.5.3)
-  - Realm (10.29.0):
-    - Realm/Headers (= 10.29.0)
-  - Realm/Headers (10.29.0)
-  - RealmSwift (10.29.0):
-    - Realm (= 10.29.0)
+  - Realm (10.32.3):
+    - Realm/Headers (= 10.32.3)
+  - Realm/Headers (10.32.3)
+  - RealmSwift (10.32.3):
+    - Realm (= 10.32.3)
   - SkeletonUI (1.0.9)
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - Alamofire
-  - AlamofireObjectMapper
   - Kingfisher (~> 7.0)
   - lottie-ios
-  - Realm (= 10.29.0)
-  - RealmSwift (= 10.29.0)
+  - Realm
+  - RealmSwift
   - SkeletonUI
   - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - AlamofireObjectMapper
     - Kingfisher
     - lottie-ios
-    - ObjectMapper
     - Realm
     - RealmSwift
     - SkeletonUI
     - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
-  AlamofireObjectMapper: 74d1440c92c42bbcc2b5f4dc81654ac095ec669f
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   Kingfisher: cd762a593a61b2fbecf7645c00f9a801a3ebfc9c
   lottie-ios: c55158d67d0629a260625cc2ded2052b829e3c3e
-  ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
-  Realm: 5596770daeff1ad76c8eb10d5947dc10472da779
-  RealmSwift: 35d8d318b7e5a8dbc7096c2a243184e4d19abcc0
+  Realm: fdf6732924dc5e69e30e0db2c11e869f92b53f3d
+  RealmSwift: 7c181da8fa1c2fe613656a77c198d6a3dc3879a1
   SkeletonUI: b5c868e6917123e3d442d6cef9c71fe048175f3b
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 804260ee944cb60c103a7e0af232f019701ec924
+PODFILE CHECKSUM: 71fe83560d3b25e9a601ab69792900fba1dac2ba
 
 COCOAPODS: 1.11.3

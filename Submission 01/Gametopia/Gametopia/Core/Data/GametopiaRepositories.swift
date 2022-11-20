@@ -11,6 +11,7 @@ import Combine
 protocol GametopiaRepositoryProtocol {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error>
   func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error>
+  func getListGenres() -> AnyPublisher<[GenreModel], Error>
 }
 
 final class GametopiaRepository: NSObject {
@@ -48,9 +49,29 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
       .flatMap { result -> AnyPublisher<[GameModel], Error> in
         return self.remote.getFewDiscoveryGame()
           .flatMap { _ in self.remote.getFewDiscoveryGame()
-            .map { GameMapper.mapGameResponsesToDomains(input: $0) }
+            .map { GameMapper.mapGameResponsesToDomains(input: $0 as [GameResult]) }
           }
           .eraseToAnyPublisher()
+      }.eraseToAnyPublisher()
+  }
+  
+  func getListGenres() -> AnyPublisher<[GenreModel], Error> {
+    return self.locale.getGenres()
+      .flatMap { result -> AnyPublisher<[GenreModel], Error> in
+        if result.isEmpty {
+          return self.remote.getListGenres()
+            .map { GenreMapper.mapGenresResponsesToEntities(input: $0) }
+            .flatMap { self.locale.addGenres(from: $0) }
+            .filter { $0 }
+            .flatMap { _ in self.locale.getGenres()
+              .map { GenreMapper.mapGenresEntitiesToDomains(input: $0) }
+            }
+            .eraseToAnyPublisher()
+        } else {
+          return self.locale.getGenres()
+            .map { GenreMapper.mapGenresEntitiesToDomains(input: $0) }
+            .eraseToAnyPublisher()
+        }
       }.eraseToAnyPublisher()
   }
 }
