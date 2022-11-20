@@ -101,7 +101,20 @@ struct HomeTab: View {
               Spacer().frame(height: 20)
               
               //Developer section
-              TitleSubtitle(title: "Developers", subtitle: "Find your favorite developer here")
+              Group{
+                TitleSubtitle(title: "Developers", subtitle: "Find your favorite developer here")
+                
+                ScrollView(.vertical, showsIndicators: false){
+                  LazyVStack{
+                    ForEach(
+                      self.presenter.developers,
+                      id: \.id
+                    ) { developer in
+                      DeveloperItem(developer: developer)
+                    }
+                  }
+                }.frame(maxHeight: 800)
+              }
               
             }
             .frame(
@@ -120,6 +133,9 @@ struct HomeTab: View {
         }
         if self.presenter.genres.count == 0 {
           self.presenter.getGenres()
+        }
+        if self.presenter.developers.count == 0 {
+          self.presenter.getDevelopers()
         }
       }
     }

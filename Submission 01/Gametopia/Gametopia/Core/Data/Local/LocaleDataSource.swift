@@ -11,7 +11,9 @@ import Combine
 
 protocol LocaleDataSourceProtocol: AnyObject {
   func getGenres() -> AnyPublisher<[GenreEntity], Error>
-  func addGenres(from categories: [GenreEntity]) -> AnyPublisher<Bool, Error>
+  func addGenres(from genres: [GenreEntity]) -> AnyPublisher<Bool, Error>
+  func getDevelopers() -> AnyPublisher<[DeveloperEntity], Error>
+  func addDevelopers(from developers: [DeveloperEntity]) -> AnyPublisher<Bool, Error>
 }
 
 final class LocaleDataSource: NSObject {
@@ -57,6 +59,49 @@ extension LocaleDataSource: LocaleDataSourceProtocol {
               temp.game_count = genre.game_count
               temp.image_background = genre.image_background
               temp.games.append(objectsIn: genre.games)
+              realm.add(temp, update: .all)
+            }
+            completion(.success(true))
+          }
+        } catch {
+          completion(.failure(DatabaseError.requestFailed))
+        }
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+  
+  func getDevelopers() -> AnyPublisher<[DeveloperEntity], Error> {
+    return Future<[DeveloperEntity], Error> { completion in
+      if let realm = self.realm {
+        let developers: Results<DeveloperEntity> = {
+          realm.objects(DeveloperEntity.self)
+            .sorted(byKeyPath: "name", ascending: true)
+        }()
+        completion(.success(developers.toArray(ofType: DeveloperEntity.self)))
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+ 
+  func addDevelopers(
+    from developers: [DeveloperEntity]
+  ) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      if let realm = self.realm {
+        do {
+          try realm.write {
+            for developer in developers {
+              //Should be manual because need to change from game array to game list
+              let temp = DeveloperEntity()
+              temp.id = String(developer.id)
+              temp.name = developer.name
+              temp.slug = developer.slug
+              temp.game_count = developer.game_count
+              temp.image_background = developer.image_background
+              temp.games.append(objectsIn: developer.games)
               
               realm.add(temp, update: .all)
             }

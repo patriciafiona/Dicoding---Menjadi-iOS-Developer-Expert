@@ -48,7 +48,14 @@ final class GenreMapper {
         slug: result.slug,
         games_count: result.game_count,
         image_background: result.image_background,
-        games: Array(_immutableCocoaArray: result.games)
+        games: result.games.map { game in
+          return GameInGenreModel(
+            id: Int(game.id),
+            name: game.name,
+            slug: game.slug,
+            added: game.added
+          )
+        }
       )
     }
   }
@@ -64,7 +71,7 @@ final class GenreMapper {
         slug: result.slug ?? "Unknown Slug",
         games_count: result.games_count ?? 0,
         image_background: result.image_background ?? "",
-        games: (result.games ?? nil) as? [GameInGenreModel]
+        games: (result.games!) as! [GameInGenreModel]
       )
     }
   }

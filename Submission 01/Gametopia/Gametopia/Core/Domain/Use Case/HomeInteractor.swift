@@ -11,6 +11,7 @@ import Combine
 protocol HomeUseCase {
   func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error>
   func getListGenres() -> AnyPublisher<[GenreModel], Error>
+  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
 }
 
 class HomeInteractor: HomeUseCase {
@@ -26,6 +27,10 @@ class HomeInteractor: HomeUseCase {
   
   func getListGenres() -> AnyPublisher<[GenreModel], Error> {
     return repository.getListGenres()
+  }
+  
+  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error> {
+    return repository.getListDevelopers()
   }
 
 }

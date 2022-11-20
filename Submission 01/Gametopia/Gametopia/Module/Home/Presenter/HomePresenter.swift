@@ -15,6 +15,8 @@ class HomePresenter: ObservableObject {
 
   @Published var games: [GameModel] = []
   @Published var genres: [GenreModel] = []
+  @Published var developers: [DeveloperModel] = []
+  
   @Published var errorMessage: String = ""
   @Published var loadingState: Bool = false
   
@@ -56,6 +58,25 @@ class HomePresenter: ObservableObject {
         }
       }, receiveValue: { genres in
         self.genres = genres
+      })
+      .store(in: &cancellables)
+  }
+  
+  func getDevelopers() {
+    loadingState = true
+    homeUseCase.getListDevelopers()
+      .receive(on: RunLoop.main)
+      .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure:
+          self.errorMessage = String(describing: completion)
+          print("Get Developer ERROR: \(completion)")
+        case .finished:
+          self.loadingState = false
+          print("Get Developer FINISHED")
+        }
+      }, receiveValue: { developers in
+        self.developers = developers
       })
       .store(in: &cancellables)
   }

@@ -32,7 +32,7 @@ struct GenreItem: View {
                       LinearGradient(gradient: Gradient(colors: [Color.black, Color.black, Color.black, Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom)
                   )
                   .overlay{
-                      HeaderOverlay(genre: genre)
+                      GenreHeaderOverlay(genre: genre)
                   }
           }
           
@@ -41,7 +41,7 @@ struct GenreItem: View {
     }
 }
 
-private struct HeaderOverlay: View{
+private struct GenreHeaderOverlay: View{
     var genre: GenreModel
     
     var gradient: LinearGradient {

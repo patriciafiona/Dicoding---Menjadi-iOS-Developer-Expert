@@ -12,6 +12,7 @@ protocol GametopiaRepositoryProtocol {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error>
   func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error>
   func getListGenres() -> AnyPublisher<[GenreModel], Error>
+  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
 }
 
 final class GametopiaRepository: NSObject {
@@ -70,6 +71,26 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
         } else {
           return self.locale.getGenres()
             .map { GenreMapper.mapGenresEntitiesToDomains(input: $0) }
+            .eraseToAnyPublisher()
+        }
+      }.eraseToAnyPublisher()
+  }
+  
+  func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error> {
+    return self.locale.getDevelopers()
+      .flatMap { result -> AnyPublisher<[DeveloperModel], Error> in
+        if result.isEmpty {
+          return self.remote.getListDevelopers()
+            .map { DeveloperMapper.mapDevelopersResponsesToEntities(input: $0) }
+            .flatMap { self.locale.addDevelopers(from: $0) }
+            .filter { $0 }
+            .flatMap { _ in self.locale.getDevelopers()
+              .map { DeveloperMapper.mapDeveloperEntitiesToDomains(input: $0) }
+            }
+            .eraseToAnyPublisher()
+        } else {
+          return self.locale.getDevelopers()
+            .map { DeveloperMapper.mapDeveloperEntitiesToDomains(input: $0) }
             .eraseToAnyPublisher()
         }
       }.eraseToAnyPublisher()
