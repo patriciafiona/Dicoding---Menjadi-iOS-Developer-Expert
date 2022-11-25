@@ -19,8 +19,8 @@ protocol RemoteDataSourceProtocol: AnyObject {
   func getFewDiscoveryGame() -> AnyPublisher<[GameResult], Error>
   func getListGenres() -> AnyPublisher<[GenreResult], Error>
   func getListDevelopers() -> AnyPublisher<[DeveloperResult], Error>
+  func getGameDetails(id: Int) -> AnyPublisher<DetailGameResponse, Error>
 //  func getSearchResults(keyword: String) -> AnyPublisher<[SearchResponse], Error>
-//  func getGameDetails(id: Int) -> AnyPublisher<[DetailGameResponse], Error>
 //  func getGenreDetails(id: Int) -> AnyPublisher<[GenreDetailResponse], Error>
 }
 
@@ -39,15 +39,15 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
           method: .get,
           parameters: param
         )
-          .validate()
-          .responseDecodable(of: GameResponse.self) { response in
-            switch response.result {
-              case .success(let value):
-                completion(.success(value.results!))
-              case .failure:
-                completion(.failure(URLError.invalidResponse))
-            }
+        .validate()
+        .responseDecodable(of: GameResponse.self) { response in
+          switch response.result {
+          case .success(let value):
+            completion(.success(value.results!))
+          case .failure:
+            completion(.failure(URLError.invalidResponse))
           }
+        }
       }
     }.eraseToAnyPublisher()
   }
@@ -60,15 +60,15 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
           method: .get,
           parameters: ["key": apiKey, "ordering": orderByRatingDesc, "page_size": "10"]
         )
-          .validate()
-          .responseDecodable(of: GameResponse.self) { response in
-            switch response.result {
-              case .success(let value):
-                completion(.success(value.results!))
-              case .failure:
-                completion(.failure(URLError.invalidResponse))
-            }
+        .validate()
+        .responseDecodable(of: GameResponse.self) { response in
+          switch response.result {
+          case .success(let value):
+            completion(.success(value.results!))
+          case .failure:
+            completion(.failure(URLError.invalidResponse))
           }
+        }
       }
     }.eraseToAnyPublisher()
   }
@@ -81,15 +81,15 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
           method: .get,
           parameters: ["key": apiKey]
         )
-          .validate()
-          .responseDecodable(of: GenreResponse.self) { response in
-            switch response.result {
-              case .success(let value):
-                completion(.success(value.results!))
-              case .failure:
-                completion(.failure(URLError.invalidResponse))
-            }
+        .validate()
+        .responseDecodable(of: GenreResponse.self) { response in
+          switch response.result {
+          case .success(let value):
+            completion(.success(value.results!))
+          case .failure:
+            completion(.failure(URLError.invalidResponse))
           }
+        }
       }
     }.eraseToAnyPublisher()
   }
@@ -102,15 +102,36 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
           method: .get,
           parameters: ["key": apiKey]
         )
-          .validate()
-          .responseDecodable(of: DeveloperResponse.self) { response in
-            switch response.result {
-              case .success(let value):
-                completion(.success(value.results!))
-              case .failure:
-                completion(.failure(URLError.invalidResponse))
-            }
+        .validate()
+        .responseDecodable(of: DeveloperResponse.self) { response in
+          switch response.result {
+          case .success(let value):
+            completion(.success(value.results!))
+          case .failure:
+            completion(.failure(URLError.invalidResponse))
           }
+        }
+      }
+    }.eraseToAnyPublisher()
+  }
+  
+  func getGameDetails(id: Int) -> AnyPublisher<DetailGameResponse, Error>{
+    return Future<DetailGameResponse, Error> { completion in
+      if let url = URL(string: "\(Endpoints.Gets.games.url)/\(id)") {
+        AF.request(
+          url,
+          method: .get,
+          parameters: ["key": apiKey]
+        )
+        .validate()
+        .responseDecodable(of: DetailGameResponse.self) { response in
+          switch response.result {
+          case .success(let value):
+            completion(.success(value))
+          case .failure:
+            completion(.failure(URLError.invalidResponse))
+          }
+        }
       }
     }.eraseToAnyPublisher()
   }

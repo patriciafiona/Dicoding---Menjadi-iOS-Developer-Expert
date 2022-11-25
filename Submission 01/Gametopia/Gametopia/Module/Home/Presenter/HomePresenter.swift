@@ -19,13 +19,14 @@ class HomePresenter: ObservableObject {
   
   @Published var errorMessage: String = ""
   @Published var loadingState: Bool = false
+  @Published var discoveryLoadingState: Bool = false
   
   init(homeUseCase: HomeUseCase) {
     self.homeUseCase = homeUseCase
   }
   
   func getGames() {
-    loadingState = true
+    discoveryLoadingState = true
     homeUseCase.getFewDiscoveryGame()
       .receive(on: RunLoop.main)
       .sink(receiveCompletion: { completion in
@@ -34,7 +35,7 @@ class HomePresenter: ObservableObject {
           self.errorMessage = String(describing: completion)
           print("Get Discovey from API ERROR: \(completion)")
         case .finished:
-          self.loadingState = false
+          self.discoveryLoadingState = false
           print("Get Discovey from API FINISHED")
         }
       }, receiveValue: { games in
@@ -82,12 +83,18 @@ class HomePresenter: ObservableObject {
   }
   
   func linkBuilder<Content: View>(
-    for game: GameModel,
+    for id: Int,
     @ViewBuilder content: () -> Content
   ) -> some View {
     NavigationLink(
-    destination: router.makeDetailView(for: game)) { content() }
+    destination: router.makeDetailView(for: id)) { content() }
   }
-
-
+  
+  func discoveryLinkBuilder<Content: View>(
+    @ViewBuilder content: () -> Content
+  ) -> some View {
+    NavigationLink(
+    destination: router.makeDiscoverByRatingView()) { content() }
+  }
+  
 }

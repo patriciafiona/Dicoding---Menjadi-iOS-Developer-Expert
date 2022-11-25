@@ -63,27 +63,41 @@ struct HomeTab: View {
                 HStack {
                   TitleSubtitle(title: "Discovery", subtitle: "Based on best rating")
                   Spacer()
-                  Button(action: {
-                    //TODO:: GO TO DISCOVERY BY RATING
-                  }) {
+                  self.presenter.discoveryLinkBuilder() {
                     Image(
                       systemName: "arrow.right.circle"
                     )
                     .tint(Color.yellow)
-                  }
+                  }.buttonStyle(PlainButtonStyle())
                 }
                 
                 ScrollView(.horizontal, showsIndicators: false){
-                  LazyHStack{
-                    ForEach(
-                      self.presenter.games,
-                      id: \.id
-                    ) { game in
-                      ZStack {
-                        self.presenter.linkBuilder(for: game) {
-                          GameItem(game: game)
-                        }.buttonStyle(PlainButtonStyle())
-                      }.padding(8)
+                  if presenter.discoveryLoadingState{
+                    LazyHStack{
+                      ForEach(1..<5) { index in
+                        //Empty Skeleton View
+                        Rectangle()
+                        .skeleton(with: presenter.discoveryLoadingState)
+                        .shape(type: .rectangle)
+                        .appearance(type: .solid(color: .yellow, background: .black))
+                        .frame(
+                          width: 200,
+                          height: 230
+                        )
+                      }
+                    }
+                  }else{
+                    LazyHStack{
+                      ForEach(
+                        self.presenter.games,
+                        id: \.id
+                      ) { game in
+                        ZStack {
+                          self.presenter.linkBuilder(for: game.id!) {
+                            GameItem(game: game)
+                          }.buttonStyle(PlainButtonStyle())
+                        }.padding(8)
+                      }
                     }
                   }
                 }.frame(maxHeight: 235)

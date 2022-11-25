@@ -24,9 +24,14 @@ final class Injection: NSObject {
     return HomeInteractor(repository: repository)
   }
 
-  func provideDetail(game: GameModel) -> DetailUseCase {
+  func provideDetail(id: Int) -> DetailUseCase {
     let repository = provideRepository()
-    return DetailInteractor(repository: repository, game: game)
+    return DetailInteractor(repository: repository, id: id)
+  }
+  
+  func provideDiscoveryByRating() -> DiscoveryByRatingUseCase {
+    let repository = provideRepository()
+    return DiscoveryByRatingInteractor(repository: repository)
   }
 
 }

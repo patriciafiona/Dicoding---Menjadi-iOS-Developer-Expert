@@ -6,28 +6,24 @@
 //
 
 import Foundation
+import Combine
 
 protocol DetailUseCase {
-
-  func getGame() -> GameModel
-
+  func getDetailGame() -> AnyPublisher<DetailGameModel, Error>
 }
 
 class DetailInteractor: DetailUseCase {
 
   private let repository: GametopiaRepositoryProtocol
-  private let game: GameModel
-
-  required init(
-    repository: GametopiaRepositoryProtocol,
-    game: GameModel
-  ) {
+  private let id: Int
+  
+  required init(repository: GametopiaRepositoryProtocol, id: Int ){
     self.repository = repository
-    self.game = game
+    self.id = id
   }
 
-  func getGame() -> GameModel {
-    return game
+  func getDetailGame() -> AnyPublisher<DetailGameModel, Error> {
+    return repository.getGameDetail(id: id)
   }
 
 }
