@@ -32,14 +32,14 @@ struct DetailGameModel: Equatable, Identifiable {
 }
 
 struct DetailPlatformModel: Equatable, Identifiable {
-    let id: UUID = UUID()
+    let id: UUID
     let platform: PlatformDetailsModel?
     let releasedAt: String?
     let requirements: PlatformRequirementModel?
 }
 
 struct PlatformDetailsModel: Equatable, Identifiable{
-    let id: Int?
+    var id: UUID
     let name, slug: String?
     let image: String?
     let yearEnd, yearStart: Int?
@@ -48,18 +48,18 @@ struct PlatformDetailsModel: Equatable, Identifiable{
 }
 
 struct PlatformRequirementModel: Equatable, Identifiable{
-  let id: UUID = UUID()
+  let id: UUID
   let minimum: String?
 }
 
 struct StoreDetailsModel: Equatable, Identifiable{
-    let id: Int?
+    let id: UUID
     let url: String?
     let store: StoreModel?
 }
 
 struct StoreModel: Equatable, Identifiable{
-    let id: Int?
+    let id: UUID
     let name, slug: String?
     let gamesCount: Int?
     let domain: String?
@@ -67,28 +67,28 @@ struct StoreModel: Equatable, Identifiable{
 }
 
 struct DeveloperInDetailGameModel: Equatable, Identifiable{
-    let id: Int?
+    let id: UUID
     let name, slug: String?
     let gamesCount: Int?
     let imageBackground: String?
 }
 
 struct PublisherModel: Equatable, Identifiable{
-    let id: Int?
+    let id: UUID
     let name, slug: String?
     let gamesCount: Int?
     let imageBackground: String?
 }
 
 struct GenreInDetailsModel: Equatable, Identifiable{
-    let id: Int?
+    let id: UUID
     let name, slug: String?
     let gamesCount: Int?
     let imageBackground: String?
 }
 
 struct TagModel: Equatable, Identifiable{
-    let id: Int?
+    let id: UUID
     let name, slug: String?
     let gamesCount: Int?
     let imageBackground: String?

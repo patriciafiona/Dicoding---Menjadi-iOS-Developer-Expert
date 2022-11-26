@@ -21,7 +21,7 @@ struct DetailGameResponse: Decodable {
   let achievements_count: Int?
   let ratings_count, suggestions_count: Int?
   let reviews_count: Int?
-  let parent_platforms: [Platform]?
+  let parent_platforms: [PlatformInDetail]?
   let platforms: [DetailPlatform]?
   let stores: [StoreDetails]?
   let developers: [Developer]?
@@ -29,6 +29,15 @@ struct DetailGameResponse: Decodable {
   let tags: [Tag]?
   let publishers: [Publisher]?
   let description_raw: String?
+}
+
+struct PlatformInDetail: Decodable {
+  let platform: PlatformDetail
+}
+
+struct PlatformDetail: Decodable {
+    let id: Int?
+    let name, slug: String?
 }
 
 struct DetailPlatform: Decodable{

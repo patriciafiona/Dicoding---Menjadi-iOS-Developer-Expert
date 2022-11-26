@@ -124,7 +124,7 @@ struct HomeTab: View {
                       self.presenter.developers,
                       id: \.id
                     ) { developer in
-                      DeveloperItem(developer: developer)
+                      DeveloperItem(developer: developer, presenter: presenter)
                     }
                   }
                 }.frame(maxHeight: 800)

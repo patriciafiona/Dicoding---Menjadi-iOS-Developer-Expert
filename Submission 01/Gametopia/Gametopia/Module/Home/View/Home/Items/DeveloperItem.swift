@@ -11,6 +11,7 @@ import Kingfisher
 
 struct DeveloperItem: View {
   var developer: DeveloperModel
+  @ObservedObject var presenter: HomePresenter
   
   var body: some View {
     ZStack {
@@ -32,7 +33,7 @@ struct DeveloperItem: View {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.black, Color.black, Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom)
           )
           .overlay{
-            DeveloperHeaderOverlay(developer: developer)
+            DeveloperHeaderOverlay(presenter: presenter, developer: developer)
           }
       }
     }
@@ -42,6 +43,7 @@ struct DeveloperItem: View {
 }
 
 private struct DeveloperHeaderOverlay: View{
+  @ObservedObject var presenter: HomePresenter
   var developer: DeveloperModel
   
   var gradient: LinearGradient {
@@ -67,7 +69,11 @@ private struct DeveloperHeaderOverlay: View{
             .foregroundColor(.yellow)
           LazyVStack{
             ForEach(developer.games.prefix(3), id: \.id){ game in
-              DeveloperGameItem(game: game)
+              ZStack{
+                self.presenter.linkBuilder(for: game.id!) {
+                  DeveloperGameItem(game: game)
+                }.buttonStyle(PlainButtonStyle())
+              }
             }
           }
         }

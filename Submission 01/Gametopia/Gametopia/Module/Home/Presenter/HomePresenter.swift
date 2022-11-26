@@ -13,7 +13,7 @@ class HomePresenter: ObservableObject {
   private let router = HomeRouter()
   private let homeUseCase: HomeUseCase
 
-  @Published var games: [GameModel] = []
+  @Published var games: [DetailGameModel] = []
   @Published var genres: [GenreModel] = []
   @Published var developers: [DeveloperModel] = []
   

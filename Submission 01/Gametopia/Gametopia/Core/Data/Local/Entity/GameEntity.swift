@@ -8,8 +8,9 @@
 import RealmSwift
 import Foundation
 
-class DetailGameEntity: Object {
+class GameEntity: Object {
   @Persisted(primaryKey: true) var id = 0
+  @Persisted var isFavorite: Bool = false
   @Persisted var slug = ""
   @Persisted var name = ""
   @Persisted var name_original = ""
@@ -26,18 +27,18 @@ class DetailGameEntity: Object {
   @Persisted var ratings_count: Int = 0
   @Persisted var suggestions_count: Int = 0
   @Persisted var reviews_count: Int = 0
-  @Persisted var parent_platforms: List<PlatformEntity>
-  @Persisted var platforms: List<DetailPlatformEntity>
-  @Persisted var stores: List<StoreDetailsEntity>
-  @Persisted var developers: List<DeveloperInDetailsEntity>
-  @Persisted var genres: List<GenreInDetailsEntity>
-  @Persisted var tags: List<TagEntity>
-  @Persisted var publishers: List<PublisherEntity>
+  @Persisted var parent_platforms: List<PlatformEntity> = List<PlatformEntity>()
+  @Persisted var platforms: List<DetailPlatformEntity> = List<DetailPlatformEntity>()
+  @Persisted var stores: List<StoreDetailsEntity> = List<StoreDetailsEntity>()
+  @Persisted var developers: List<DeveloperInDetailsEntity> = List<DeveloperInDetailsEntity>()
+  @Persisted var genres: List<GenreInDetailsEntity> = List<GenreInDetailsEntity>()
+  @Persisted var tags: List<TagEntity> = List<TagEntity>()
+  @Persisted var publishers: List<PublisherEntity> = List<PublisherEntity>()
   @Persisted var description_raw: String = ""
 }
 
 class PlatformEntity: Object {
-  @Persisted(primaryKey: true) var id = 0
+  @Persisted(primaryKey: true) var id = UUID()
   @Persisted var name: String = ""
   @Persisted var slug: String = ""
 }
@@ -50,7 +51,7 @@ class DetailPlatformEntity: Object{
 }
 
 class PlatformDetailsEntity: Object{
-  @Persisted(primaryKey: true) var id: Int? = 0
+  @Persisted(primaryKey: true) var id = UUID()
     @Persisted var name: String? = ""
     @Persisted var slug: String? = ""
     @Persisted var games_count: Int? = 0
@@ -66,13 +67,13 @@ class PlatformRequirementEntity: Object{
 }
 
 class StoreDetailsEntity: Object{
-  @Persisted(primaryKey: true) var id = 0
+  @Persisted(primaryKey: true) var id = UUID()
   @Persisted var url: String = ""
   @Persisted var store: StoreEntity? = nil
 }
 
 class StoreEntity: Object{
-  @Persisted(primaryKey: true) var id: Int? = 0
+  @Persisted(primaryKey: true) var id = UUID()
   @Persisted var name: String? = ""
   @Persisted var slug: String? = ""
   @Persisted var games_count: Int? = 0
@@ -81,7 +82,7 @@ class StoreEntity: Object{
 }
 
 class DeveloperInDetailsEntity: Object{
-  @Persisted(primaryKey: true) var id = 0
+  @Persisted(primaryKey: true) var id = UUID()
   @Persisted var name: String = ""
   @Persisted var slug: String = ""
   @Persisted var games_count: Int = 0
@@ -89,7 +90,7 @@ class DeveloperInDetailsEntity: Object{
 }
 
 class PublisherEntity: Object{
-  @Persisted(primaryKey: true) var id = 0
+  @Persisted(primaryKey: true) var id = UUID()
   @Persisted var name: String = ""
   @Persisted var slug: String = ""
   @Persisted var games_count: Int = 0
@@ -97,7 +98,7 @@ class PublisherEntity: Object{
 }
 
 class GenreInDetailsEntity: Object{
-  @Persisted(primaryKey: true) var id = 0
+  @Persisted(primaryKey: true) var id = UUID()
   @Persisted var name: String = ""
   @Persisted var slug: String = ""
   @Persisted var games_count: Int = 0
@@ -105,7 +106,7 @@ class GenreInDetailsEntity: Object{
 }
 
 class TagEntity: Object{
-  @Persisted(primaryKey: true) var id = 0
+  @Persisted(primaryKey: true) var id = UUID()
   @Persisted var name: String = ""
   @Persisted var slug: String = ""
   @Persisted var games_count: Int = 0

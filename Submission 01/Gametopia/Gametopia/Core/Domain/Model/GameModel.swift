@@ -29,7 +29,7 @@ struct PlatformsModel: Equatable {
 
 // MARK: - Platform
 struct PlatformModel: Equatable, Identifiable {
-    let id: Int?
+    let id: UUID
     let name, slug: String?
 }
 

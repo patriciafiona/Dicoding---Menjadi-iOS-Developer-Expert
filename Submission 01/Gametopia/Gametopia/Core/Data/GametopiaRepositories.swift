@@ -10,7 +10,8 @@ import Combine
  
 protocol GametopiaRepositoryProtocol {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error>
-  func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error>
+//  func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[DetailGameModel], Error>
+  func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error>
   
   func getListGenres() -> AnyPublisher<[GenreModel], Error>
   func getGenreDetail(id: Int) -> AnyPublisher<GenreModel, Error>
@@ -53,38 +54,39 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
 //    return self.locale.getGames()
 //      .flatMap { result -> AnyPublisher<[DetailGameModel], Error> in
 //        if result.isEmpty {
-//          self.remote.getAllDiscoveryGame(sortFromBest: sortFromBest )
-//            .map {
-//              for game in $0 {
-//                return self.remote.getGameDetails(id: game.id ?? 0)
-//                  .map { detailRes in
-//                    DetailGameMapper.mapDetailGameResponsesToEntities(input: detailRes)
-//                  }
-//                  .flatMap { self.locale.addGames(from: $0) }
-//                  .filter { $0 }
-//                  .eraseToAnyPublisher()
-//              }
-//            }
+//          return self.remote.getAllDiscoveryGame(sortFromBest: sortFromBest )
+//            .map { DetailGameMapper.mapDetailGameResponseToEntities(input: $0) }
+//            .flatMap { self.locale.addGames(from: $0) }
+//            .filter { $0 }
 //            .flatMap { _ in self.locale.getGames()
 //              .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
 //            }
 //            .eraseToAnyPublisher()
 //        } else {
-//          return self.locale.getGames()
+//          return self.locale.getBestRatingGames()
 //            .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
 //            .eraseToAnyPublisher()
 //        }
 //      }.eraseToAnyPublisher()
 //  }
   
-  func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error> {
-    return self.remote.getFewDiscoveryGame()
-      .flatMap { result -> AnyPublisher<[GameModel], Error> in
-        return self.remote.getFewDiscoveryGame()
-          .flatMap { _ in self.remote.getFewDiscoveryGame()
-            .map { GameMapper.mapGameResponsesToDomains(input: $0 as [GameResult]) }
-          }
-          .eraseToAnyPublisher()
+  func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error> {
+    return self.locale.getBestRatingGames()
+      .flatMap { result -> AnyPublisher<[DetailGameModel], Error> in
+        if result.isEmpty {
+          return self.remote.getFewDiscoveryGame()
+            .map { DetailGameMapper.mapDetailGameResponseToEntities(input: $0) }
+            .flatMap { self.locale.addGames(from: $0) }
+            .filter { $0 }
+            .flatMap { _ in self.locale.getBestRatingGames()
+              .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
+            }
+            .eraseToAnyPublisher()
+        } else {
+          return self.locale.getBestRatingGames()
+            .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
+            .eraseToAnyPublisher()
+        }
       }.eraseToAnyPublisher()
   }
   
@@ -128,24 +130,15 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
       }.eraseToAnyPublisher()
   }
   
-//  func getGameDetail(id: Int) -> AnyPublisher<DetailGameModel, Error> {
-//    return self.remote.getGameDetails(id: id)
-//      .flatMap { result -> AnyPublisher<DetailGameModel, Error> in
-//        return self.remote.getGameDetails(id: id)
-//          .flatMap { _ in self.remote.getGameDetails(id: id)
-//            .map { DetailGameMapper.mapDetailGameResponsesToDomains(input: $0 as DetailGameResponse) }
-//          }
-//          .eraseToAnyPublisher()
-//      }.eraseToAnyPublisher()
-//  }
-  
   func getGameDetail(id: Int) -> AnyPublisher<DetailGameModel, Error> {
     return self.locale.getDetailGame(id: id )
       .flatMap { result -> AnyPublisher<DetailGameModel, Error> in
-        if result.name == "" {
+        if result.desc == "" {
           return self.remote.getGameDetails(id: id)
             .map { DetailGameMapper.mapDetailGameResponsesToEntities(input: $0) }
-            .flatMap { self.locale.addGames(from: $0) }
+            .flatMap { res in
+              self.locale.updateGames(gameEntity: res)
+            }
             .filter { $0 }
             .flatMap { _ in self.locale.getDetailGame(id: id )
               .map { DetailGameMapper.mapDetailGameEntityToDomain(input: $0) }
@@ -174,7 +167,6 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
             }
             .eraseToAnyPublisher()
         } else {
-          print("MASUK SINI")
           return self.locale.getDetailGenre(id: id )
             .map { GenreMapper.mapGenresEntityToDomains(input: $0) }
             .eraseToAnyPublisher()

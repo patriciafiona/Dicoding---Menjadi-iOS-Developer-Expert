@@ -12,6 +12,15 @@ import SkeletonUI
 struct DetailGenreView: View {
   @ObservedObject var presenter: DetailGenrePresenter
   
+  init(presenter: DetailGenrePresenter) {
+      self.presenter = presenter
+      
+      let navBarAppearance = UINavigationBar.appearance()
+      navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+      navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+      navBarAppearance.barTintColor = .black
+  }
+  
   var body: some View {
     RootGenreContent(presenter: presenter)
   }
@@ -114,6 +123,7 @@ struct RootGenreContent: View{
                         }
                     })
         }
+        .navigationBarBackButtonHidden(true)
         .phoneOnlyStackNavigationView()
         .statusBar(hidden: true)
         .onAppear {

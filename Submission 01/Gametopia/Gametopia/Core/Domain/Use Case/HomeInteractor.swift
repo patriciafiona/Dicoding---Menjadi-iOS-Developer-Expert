@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol HomeUseCase {
-  func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error>
+  func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error>
   func getListGenres() -> AnyPublisher<[GenreModel], Error>
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
 }
@@ -21,7 +21,7 @@ class HomeInteractor: HomeUseCase {
     self.repository = repository
   }
   
-  func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error> {
+  func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error> {
     return repository.getFewDiscoveryGame()
   }
   

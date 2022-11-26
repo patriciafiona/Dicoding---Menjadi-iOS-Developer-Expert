@@ -10,11 +10,11 @@ import Kingfisher
 import SkeletonUI
 
 struct GameItem: View {
-    var game: GameModel
+    var game: DetailGameModel
   
     var body: some View {
       VStack(alignment: .leading, spacing: 0){
-        KFImage.url(URL(string: (game.background_image) ?? ""))
+        KFImage.url(URL(string: (game.backgroundImage) ?? ""))
             .placeholder {
                 Image("gametopia_icon")
                     .resizable()
@@ -26,7 +26,7 @@ struct GameItem: View {
             .aspectRatio(contentMode: .fill)
             .frame(width: 200, height: 150)
             .cornerRadius(10)
-            .skeleton(with: game.background_image == nil)
+            .skeleton(with: game.backgroundImage == nil)
             .shape(type: .rectangle)
             .appearance(type: .solid(color: .yellow, background: .black))
         HStack{
