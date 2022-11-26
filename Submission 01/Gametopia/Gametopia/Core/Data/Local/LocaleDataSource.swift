@@ -12,13 +12,15 @@ import Combine
 protocol LocaleDataSourceProtocol: AnyObject {
   func getGenres() -> AnyPublisher<[GenreEntity], Error>
   func addGenres(from genres: [GenreEntity]) -> AnyPublisher<Bool, Error>
+  func updateGenre(id: Int, desc: String) -> AnyPublisher<Bool, Error>
+  func getDetailGenre(id: Int) -> AnyPublisher<GenreEntity, Error>
+  
   func getDevelopers() -> AnyPublisher<[DeveloperEntity], Error>
   func addDevelopers(from developers: [DeveloperEntity]) -> AnyPublisher<Bool, Error>
   
   func getGames() -> AnyPublisher<[DetailGameEntity], Error>
 //  func addGames(from detailGames: [DetailGameEntity]) -> AnyPublisher<Bool, Error>
   func addGames(from game: DetailGameEntity) -> AnyPublisher<Bool, Error>
-  
   func getDetailGame(id: Int) -> AnyPublisher<DetailGameEntity, Error>
 }
 
@@ -35,6 +37,45 @@ final class LocaleDataSource: NSObject {
 }
 
 extension LocaleDataSource: LocaleDataSourceProtocol {
+  func getDetailGenre(id: Int) -> AnyPublisher<GenreEntity, Error> {
+    return Future<GenreEntity, Error> { completion in
+      if let realm = self.realm {
+        let genre: GenreEntity = {
+          realm.object(ofType: GenreEntity.self, forPrimaryKey: id)
+        }() ?? GenreEntity()
+        completion(.success(genre))
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+  
+  func updateGenre(id: Int, desc: String) -> AnyPublisher<Bool, Error> {
+    print("Desc: \(desc)")
+    return Future<Bool, Error> { completion in
+      if let realm = self.realm {
+        do {
+          let currentData = realm.objects(GenreEntity.self).where {
+            $0.id == id
+        }.first!
+          //Update the nil description
+          try realm.write {
+//            currentData.desc = desc
+            currentData.setValue(desc, forKey: "desc")
+          }
+          completion(.success(true))
+          print("SUCCESS UPDATED GENRE ENTITY")
+        } catch {
+          print("REQUEST FAILED")
+          completion(.failure(DatabaseError.requestFailed))
+        }
+      } else {
+        print("INVALID INSTANCE")
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+  
   func getGenres() -> AnyPublisher<[GenreEntity], Error> {
     return Future<[GenreEntity], Error> { completion in
       if let realm = self.realm {
@@ -59,7 +100,7 @@ extension LocaleDataSource: LocaleDataSourceProtocol {
             for genre in genres {
               //Should be manual because need to change from game array to game list
               let temp = GenreEntity()
-              temp.id = String(genre.id)
+              temp.id = genre.id
               temp.name = genre.name
               temp.slug = genre.slug
               temp.game_count = genre.game_count

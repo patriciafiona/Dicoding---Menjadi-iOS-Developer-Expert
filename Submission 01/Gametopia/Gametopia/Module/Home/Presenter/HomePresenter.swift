@@ -97,4 +97,12 @@ class HomePresenter: ObservableObject {
     destination: router.makeDiscoverByRatingView()) { content() }
   }
   
+  func genreLinkBuilder<Content: View>(
+    for id: Int,
+    @ViewBuilder content: () -> Content
+  ) -> some View {
+    NavigationLink(
+    destination: router.makeDetailGenreView(for: id )) { content() }
+  }
+  
 }

@@ -29,6 +29,11 @@ final class Injection: NSObject {
     return DetailInteractor(repository: repository, id: id)
   }
   
+  func provideDetailGenre(id: Int) -> DetailGenreUseCase {
+    let repository = provideRepository()
+    return DetailGenreInteractor(repository: repository, id: id)
+  }
+  
   func provideDiscoveryByRating() -> DiscoveryByRatingUseCase {
     let repository = provideRepository()
     return DiscoveryByRatingInteractor(repository: repository)

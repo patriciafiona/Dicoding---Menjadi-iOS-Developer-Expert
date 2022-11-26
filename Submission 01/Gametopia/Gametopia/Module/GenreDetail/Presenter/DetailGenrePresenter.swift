@@ -5,11 +5,13 @@
 //  Created by Patricia Fiona on 25/11/22.
 //
 
-import Foundation
+import SwiftUI
+import Combine
 
-class DetailPresenter: ObservableObject {
+class DetailGenrePresenter: ObservableObject {
   private var cancellables: Set<AnyCancellable> = []
   private let detailGenreUseCase: DetailGenreUseCase
+  private let router = DetailGenreRouter()
 
   @Published var detailGenre: GenreModel? = nil
   @Published var errorMessage: String = ""
@@ -21,20 +23,30 @@ class DetailPresenter: ObservableObject {
   
   func getDetailGenre() {
     loadingState = true
-    detailGenreUseCase.getDetailGame()
+    detailGenreUseCase.getDetailGenre()
       .receive(on: RunLoop.main)
       .sink(receiveCompletion: { completion in
         switch completion {
         case .failure:
           self.errorMessage = String(describing: completion)
-          print("Get Detail Game from API ERROR: \(completion)")
+          print("Get Detail Genre from API ERROR: \(completion)")
         case .finished:
+          print("Get Detail Genre from API Success")
           self.loadingState = false
         }
       }, receiveValue: { detail in
-        self.detailGame = detail
+        self.detailGenre = detail
+        print("Detail Genre: \(detail)")
       })
       .store(in: &cancellables)
+  }
+  
+  func linkBuilder<Content: View>(
+    for id: Int,
+    @ViewBuilder content: () -> Content
+  ) -> some View {
+    NavigationLink(
+    destination: router.makeDetailView(for: id)) { content() }
   }
 
 }

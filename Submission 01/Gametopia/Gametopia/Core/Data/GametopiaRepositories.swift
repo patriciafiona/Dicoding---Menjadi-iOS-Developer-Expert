@@ -13,6 +13,8 @@ protocol GametopiaRepositoryProtocol {
   func getFewDiscoveryGame() -> AnyPublisher<[GameModel], Error>
   
   func getListGenres() -> AnyPublisher<[GenreModel], Error>
+  func getGenreDetail(id: Int) -> AnyPublisher<GenreModel, Error>
+  
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
   func getGameDetail(id: Int) -> AnyPublisher<DetailGameModel, Error>
 }
@@ -158,22 +160,26 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
   }
   
   func getGenreDetail(id: Int) -> AnyPublisher<GenreModel, Error> {
-    return self.locale.getDetailGame(id: id )
-      .flatMap { result -> AnyPublisher<DetailGameModel, Error> in
-        if result.name == "" {
-          return self.remote.getGameDetails(id: id)
-            .map { DetailGameMapper.mapDetailGameResponsesToEntities(input: $0) }
-            .flatMap { self.locale.addGames(from: $0) }
+    return self.locale.getDetailGenre(id: id )
+      .flatMap { result -> AnyPublisher<GenreModel, Error> in
+        if result.desc.elementsEqual("Unknown Description") {
+          return self.remote.getGenreDetails(id: id)
+            .map { GenreMapper.mapGenresResponsesToEntity(input: $0) }
+            .flatMap { res in
+              self.locale.updateGenre(id: id, desc: res.desc)
+            }
             .filter { $0 }
-            .flatMap { _ in self.locale.getDetailGame(id: id )
-              .map { DetailGameMapper.mapDetailGameEntityToDomain(input: $0) }
+            .flatMap { _ in self.locale.getDetailGenre(id: id )
+              .map { GenreMapper.mapGenresEntityToDomains(input: $0) }
             }
             .eraseToAnyPublisher()
         } else {
-          return self.locale.getDetailGame(id: id )
-            .map { DetailGameMapper.mapDetailGameEntityToDomain(input: $0) }
+          print("MASUK SINI")
+          return self.locale.getDetailGenre(id: id )
+            .map { GenreMapper.mapGenresEntityToDomains(input: $0) }
             .eraseToAnyPublisher()
         }
       }.eraseToAnyPublisher()
   }
+  
 }

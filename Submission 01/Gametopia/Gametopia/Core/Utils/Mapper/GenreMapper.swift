@@ -16,7 +16,7 @@ final class GenreMapper {
     return genreResponses.map { result in
       let newGenre = GenreEntity()
       
-      newGenre.id = String(result.id ?? 0) 
+      newGenre.id = result.id ?? 0
       newGenre.name = result.name ?? "Unknown Name"
       newGenre.slug = result.slug ?? "Unknown Slug"
       newGenre.game_count = result.games_count ?? 0
@@ -36,6 +36,20 @@ final class GenreMapper {
       newGenre.games = temp
       return newGenre
     }
+  }
+  
+  static func mapGenresResponsesToEntity(
+    input result: DetailGenreResponse
+  ) -> GenreEntity {
+    let newGenre = GenreEntity()
+    
+    newGenre.id = result.id ?? 0
+    newGenre.name = result.name ?? "Unknown Name"
+    newGenre.slug = result.slug ?? "Unknown Slug"
+    newGenre.game_count = result.games_count ?? 0
+    newGenre.image_background = result.image_background ?? ""
+    newGenre.desc = result.description ?? ""
+    return newGenre
   }
 
   static func mapGenresEntitiesToDomains(
@@ -58,6 +72,27 @@ final class GenreMapper {
         }
       )
     }
+  }
+  
+  static func mapGenresEntityToDomains(
+    input result: GenreEntity
+  ) -> GenreModel {
+    return GenreModel(
+      id: Int(result.id),
+      name: result.name,
+      slug: result.slug,
+      games_count: result.game_count,
+      image_background: result.image_background,
+      desc: result.desc,
+      games: result.games.map { game in
+        return GameInGenreModel(
+          id: Int(game.id),
+          name: game.name,
+          slug: game.slug,
+          added: game.added
+        )
+      }
+    )
   }
   
   static func mapGenreResponsesToDomains(

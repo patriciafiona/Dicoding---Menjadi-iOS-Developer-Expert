@@ -22,4 +22,10 @@ class HomeRouter {
     return DiscoveryByRatingView(presenter: presenter)
   }
   
+  func makeDetailGenreView(for id: Int) -> some View {
+    let detailGenreUseCase = Injection.init().provideDetailGenre(id: id)
+    let presenter = DetailGenrePresenter(detailGenreUseCase: detailGenreUseCase)
+    return DetailGenreView(presenter: presenter)
+  }
+  
 }

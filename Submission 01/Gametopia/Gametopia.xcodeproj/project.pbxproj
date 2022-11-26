@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F7564FAA29310DFB00CECC89 /* GenrePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FA929310DFB00CECC89 /* GenrePresenter.swift */; };
+		F7564FAA29310DFB00CECC89 /* DetailGenrePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FA929310DFB00CECC89 /* DetailGenrePresenter.swift */; };
 		F7564FAC29310E5900CECC89 /* DetailGenreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FAB29310E5900CECC89 /* DetailGenreInteractor.swift */; };
+		F7564FAE2931148700CECC89 /* DetailGenreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FAD2931148700CECC89 /* DetailGenreResponse.swift */; };
+		F7564FB12931AFD900CECC89 /* DetailGenreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FB02931AFD900CECC89 /* DetailGenreRouter.swift */; };
 		F7EBBEAB29285BA700D89943 /* GametopiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBEAA29285BA700D89943 /* GametopiaApp.swift */; };
 		F7EBBEAD29285BA700D89943 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBEAC29285BA700D89943 /* HomeView.swift */; };
 		F7EBBEAF29285BA800D89943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EBBEAE29285BA800D89943 /* Assets.xcassets */; };
@@ -57,7 +59,7 @@
 		F7EBBF3D2929DE9E00D89943 /* DeveloperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF3C2929DE9E00D89943 /* DeveloperModel.swift */; };
 		F7EBBF3F2929E05000D89943 /* DeveloperMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF3E2929E05000D89943 /* DeveloperMapper.swift */; };
 		F7EBBF432929E32200D89943 /* DeveloperItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF422929E32200D89943 /* DeveloperItem.swift */; };
-		F7EBBF49292A71A300D89943 /* GenreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF48292A71A300D89943 /* GenreDetailView.swift */; };
+		F7EBBF49292A71A300D89943 /* DetailGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF48292A71A300D89943 /* DetailGenreView.swift */; };
 		F7EBBF4D292A7CCB00D89943 /* DetailGameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF4C292A7CCB00D89943 /* DetailGameResponse.swift */; };
 		F7EBBF4F292A7ECC00D89943 /* DetailGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF4E292A7ECC00D89943 /* DetailGameModel.swift */; };
 		F7EBBF53292A840200D89943 /* DetailGameMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBF52292A840200D89943 /* DetailGameMapper.swift */; };
@@ -74,8 +76,10 @@
 		00A8DE611AF48C55C7AC4EA0 /* Pods-Gametopia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gametopia.release.xcconfig"; path = "Target Support Files/Pods-Gametopia/Pods-Gametopia.release.xcconfig"; sourceTree = "<group>"; };
 		2FF68E5491AB4F41B1E6DD1C /* Pods_Gametopia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gametopia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD302F66BEB46460B0C7E8B7 /* Pods-Gametopia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gametopia.debug.xcconfig"; path = "Target Support Files/Pods-Gametopia/Pods-Gametopia.debug.xcconfig"; sourceTree = "<group>"; };
-		F7564FA929310DFB00CECC89 /* GenrePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenrePresenter.swift; sourceTree = "<group>"; };
+		F7564FA929310DFB00CECC89 /* DetailGenrePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenrePresenter.swift; sourceTree = "<group>"; };
 		F7564FAB29310E5900CECC89 /* DetailGenreInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenreInteractor.swift; sourceTree = "<group>"; };
+		F7564FAD2931148700CECC89 /* DetailGenreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenreResponse.swift; sourceTree = "<group>"; };
+		F7564FB02931AFD900CECC89 /* DetailGenreRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenreRouter.swift; sourceTree = "<group>"; };
 		F7EBBEA729285BA700D89943 /* Gametopia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gametopia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EBBEAA29285BA700D89943 /* GametopiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GametopiaApp.swift; sourceTree = "<group>"; };
 		F7EBBEAC29285BA700D89943 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -126,7 +130,7 @@
 		F7EBBF3C2929DE9E00D89943 /* DeveloperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperModel.swift; sourceTree = "<group>"; };
 		F7EBBF3E2929E05000D89943 /* DeveloperMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperMapper.swift; sourceTree = "<group>"; };
 		F7EBBF422929E32200D89943 /* DeveloperItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperItem.swift; sourceTree = "<group>"; };
-		F7EBBF48292A71A300D89943 /* GenreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreDetailView.swift; sourceTree = "<group>"; };
+		F7EBBF48292A71A300D89943 /* DetailGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenreView.swift; sourceTree = "<group>"; };
 		F7EBBF4C292A7CCB00D89943 /* DetailGameResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGameResponse.swift; sourceTree = "<group>"; };
 		F7EBBF4E292A7ECC00D89943 /* DetailGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGameModel.swift; sourceTree = "<group>"; };
 		F7EBBF52292A840200D89943 /* DetailGameMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGameMapper.swift; sourceTree = "<group>"; };
@@ -165,6 +169,14 @@
 				00A8DE611AF48C55C7AC4EA0 /* Pods-Gametopia.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F7564FAF2931AF9300CECC89 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				F7564FB02931AFD900CECC89 /* DetailGenreRouter.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		F7EBBE9E29285BA600D89943 = {
@@ -359,6 +371,7 @@
 				F7EBBF2B2929A35400D89943 /* GenreResponse.swift */,
 				F7EBBF382929DD7C00D89943 /* DeveloperResponse.swift */,
 				F7EBBF4C292A7CCB00D89943 /* DetailGameResponse.swift */,
+				F7564FAD2931148700CECC89 /* DetailGenreResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -533,6 +546,7 @@
 		F7EBBF44292A715B00D89943 /* GenreDetail */ = {
 			isa = PBXGroup;
 			children = (
+				F7564FAF2931AF9300CECC89 /* Router */,
 				F7EBBF47292A719100D89943 /* Presenter */,
 				F7EBBF45292A717B00D89943 /* View */,
 			);
@@ -542,7 +556,7 @@
 		F7EBBF45292A717B00D89943 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F7EBBF48292A71A300D89943 /* GenreDetailView.swift */,
+				F7EBBF48292A71A300D89943 /* DetailGenreView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -550,7 +564,7 @@
 		F7EBBF47292A719100D89943 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				F7564FA929310DFB00CECC89 /* GenrePresenter.swift */,
+				F7564FA929310DFB00CECC89 /* DetailGenrePresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -724,7 +738,7 @@
 				F7EBBEFF2928B00400D89943 /* LocaleDataSource.swift in Sources */,
 				F7EBBEAD29285BA700D89943 /* HomeView.swift in Sources */,
 				F7EBBF53292A840200D89943 /* DetailGameMapper.swift in Sources */,
-				F7564FAA29310DFB00CECC89 /* GenrePresenter.swift in Sources */,
+				F7564FAA29310DFB00CECC89 /* DetailGenrePresenter.swift in Sources */,
 				F7EBBF4F292A7ECC00D89943 /* DetailGameModel.swift in Sources */,
 				F7EBBEAB29285BA700D89943 /* GametopiaApp.swift in Sources */,
 				F7EBBF3B2929DDE900D89943 /* DeveloperEntity.swift in Sources */,
@@ -735,12 +749,13 @@
 				F7EBBEDF2928958A00D89943 /* ProfileTab.swift in Sources */,
 				F7EBBEE52928A7A500D89943 /* RemoteDataSource.swift in Sources */,
 				F7EBBF1A2928CC3F00D89943 /* DetailView.swift in Sources */,
+				F7564FAE2931148700CECC89 /* DetailGenreResponse.swift in Sources */,
 				F7EBBF332929A9FB00D89943 /* GenreEntity.swift in Sources */,
 				F7EBBF0F2928CADA00D89943 /* HomePresenter.swift in Sources */,
 				F7EBBF5A292BC04A00D89943 /* GenreFilterDropdownOptionModel.swift in Sources */,
 				F7EBBF432929E32200D89943 /* DeveloperItem.swift in Sources */,
 				F7EBBF2A2928F00D00D89943 /* LottieView.swift in Sources */,
-				F7EBBF49292A71A300D89943 /* GenreDetailView.swift in Sources */,
+				F7EBBF49292A71A300D89943 /* DetailGenreView.swift in Sources */,
 				F7EBBEDD2928958000D89943 /* FavoriteTab.swift in Sources */,
 				F7EBBF58292BBFF200D89943 /* DiscoveryByRatingView.swift in Sources */,
 				F7EBBF352929C50C00D89943 /* DeviceRotation.swift in Sources */,
@@ -751,6 +766,7 @@
 				F7EBBEDB2928957900D89943 /* SearchTab.swift in Sources */,
 				F7EBBF5C292BC08A00D89943 /* DiscoveryByRatingPresenter.swift in Sources */,
 				F7EBBF112928CB1400D89943 /* HomeRouter.swift in Sources */,
+				F7564FB12931AFD900CECC89 /* DetailGenreRouter.swift in Sources */,
 				F7EBBEEE2928A82500D89943 /* GameResponse.swift in Sources */,
 				F7EBBEE129289BFF00D89943 /* ImageCarouselTemplate.swift in Sources */,
 				F7EBBF1E2928CCD100D89943 /* PlatformItem.swift in Sources */,

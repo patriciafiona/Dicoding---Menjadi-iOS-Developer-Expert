@@ -221,7 +221,11 @@ struct GenreGridView: View{
     ScrollView {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(presenter.genres, id: \.id) { genre in
-              GenreItem(genre: genre)
+              ZStack{
+                self.presenter.genreLinkBuilder(for: genre.id!) {
+                  GenreItem(genre: genre)
+                }.buttonStyle(PlainButtonStyle())
+              }
             }
         }
         .padding(.horizontal)

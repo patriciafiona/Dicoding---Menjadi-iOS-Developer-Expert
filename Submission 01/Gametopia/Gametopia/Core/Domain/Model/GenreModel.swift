@@ -13,6 +13,7 @@ struct GenreModel: Equatable, Identifiable {
     let name, slug: String?
     let games_count: Int?
     let image_background: String?
+    var desc: String = "Unknown Description"
     let games: [GameInGenreModel]
 }
 

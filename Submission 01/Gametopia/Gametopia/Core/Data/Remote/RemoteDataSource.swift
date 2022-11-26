@@ -20,8 +20,8 @@ protocol RemoteDataSourceProtocol: AnyObject {
   func getListGenres() -> AnyPublisher<[GenreResult], Error>
   func getListDevelopers() -> AnyPublisher<[DeveloperResult], Error>
   func getGameDetails(id: Int) -> AnyPublisher<DetailGameResponse, Error>
+  func getGenreDetails(id: Int) -> AnyPublisher<DetailGenreResponse, Error>
 //  func getSearchResults(keyword: String) -> AnyPublisher<[SearchResponse], Error>
-//  func getGenreDetails(id: Int) -> AnyPublisher<[GenreDetailResponse], Error>
 }
 
 final class RemoteDataSource: NSObject {
@@ -30,6 +30,27 @@ final class RemoteDataSource: NSObject {
 }
 
 extension RemoteDataSource: RemoteDataSourceProtocol {
+  func getGenreDetails(id: Int) -> AnyPublisher<DetailGenreResponse, Error> {
+    return Future<DetailGenreResponse, Error> { completion in
+      if let url = URL(string: "\(Endpoints.Gets.genres.url)/\(id)") {
+        AF.request(
+          url,
+          method: .get,
+          parameters: ["key": apiKey]
+        )
+        .validate()
+        .responseDecodable(of: DetailGenreResponse.self) { response in
+          switch response.result {
+          case .success(let value):
+            completion(.success(value))
+          case .failure:
+            completion(.failure(URLError.invalidResponse))
+          }
+        }
+      }
+    }.eraseToAnyPublisher()
+  }
+  
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameResult], Error> {
     let param = ["key": apiKey, "ordering": sortFromBest == true ? orderByRatingDesc: orderByRatingAsc]
     return Future<[GameResult], Error> { completion in
