@@ -10,6 +10,7 @@ import Combine
 
 protocol DiscoveryByRatingUseCase {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error>
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
 }
 
 class DiscoveryByRatingInteractor: DiscoveryByRatingUseCase {
@@ -21,5 +22,9 @@ class DiscoveryByRatingInteractor: DiscoveryByRatingUseCase {
   
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error> {
     return repository.getAllDiscoveryGame(sortFromBest: sortFromBest)
+  }
+  
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>{
+    return repository.updateFavoriteGame(id: id, isFavorite: isFavorite)
   }
 }

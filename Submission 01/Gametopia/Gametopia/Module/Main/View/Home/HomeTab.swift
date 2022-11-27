@@ -93,7 +93,9 @@ struct HomeTab: View {
                     ) { game in
                       ZStack {
                         self.presenter.linkBuilder(for: game.id!) {
-                          GameItem(game: game)
+                          GameItem(
+                            presenter: presenter, game: game
+                          )
                         }.buttonStyle(PlainButtonStyle())
                       }.padding(8)
                     }
@@ -141,15 +143,11 @@ struct HomeTab: View {
         }
       }
     }.onAppear {
-      if self.presenter.games.count == 0 {
-        self.presenter.getGames()
-      }
-      if self.presenter.genres.count == 0 {
-        self.presenter.getGenres()
-      }
-      if self.presenter.developers.count == 0 {
-        self.presenter.getDevelopers()
-      }
+      self.presenter.getGames()
+      self.presenter.getGenres()
+      self.presenter.getDevelopers()
+      
+      self.presenter.objectWillChange.send()
     }
   }
 }

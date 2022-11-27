@@ -9,12 +9,17 @@ import SwiftUI
 
 struct SplashView: View {
   @State var pushNewView: Bool = false
+  
   @EnvironmentObject var homePresenter: HomePresenter
+  @EnvironmentObject var favoritePresenter: FavoritesPresenter
   
   var body: some View {
     NavigationView{
       NavigationLink(isActive: $pushNewView) {
-        HomeView(presenter: homePresenter)
+        HomeView(
+          homePresenter: homePresenter,
+          favoritePresenter: favoritePresenter
+        )
       } label: {
         SplashContent()
       }

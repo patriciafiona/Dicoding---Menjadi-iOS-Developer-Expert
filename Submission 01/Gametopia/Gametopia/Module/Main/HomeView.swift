@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-  @ObservedObject var presenter: HomePresenter
+  @ObservedObject var homePresenter: HomePresenter
+  @ObservedObject var favoritePresenter: FavoritesPresenter
+  
   @State var tabSelection: Tabs = .tabHome
   
   enum Tabs{
@@ -17,19 +19,19 @@ struct HomeView: View {
     var body: some View {
         NavigationView{
             TabView(selection: $tabSelection) {
-               HomeTab(presenter: presenter)
+              HomeTab(presenter: homePresenter)
                  .tabItem {
                     Image(systemName: "house")
                     Text("Home")
                  }
                  .tag(Tabs.tabHome)
-               SearchTab(presenter: presenter)
+               SearchTab(presenter: homePresenter)
                  .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                  }
                  .tag(Tabs.tabSearch)
-                FavoriteTab(presenter: presenter)
+                FavoriteTab(presenter: favoritePresenter)
                   .tabItem {
                      Image(systemName: "heart.circle.fill")
                      Text("Favorites")
@@ -45,5 +47,6 @@ struct HomeView: View {
             .accentColor(.yellow)
         }
         .navigationBarBackButtonHidden(true)
+        .navigationViewStyle(.stack)
     }
 }

@@ -20,6 +20,23 @@ class DetailPresenter: ObservableObject {
     self.detailUseCase = detailUseCase
   }
   
+  func updateFavoriteGame(id: Int, isFavorite: Bool){
+    detailUseCase.updateFavoriteGame(id: id, isFavorite: isFavorite)
+      .receive(on: RunLoop.main)
+      .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure:
+          self.errorMessage = String(describing: completion)
+          print("Update Favorite ERROR: \(completion)")
+        case .finished:
+          print("Update Favorite FINISHED")
+        }
+      }, receiveValue: { game in
+        self.detailGame = game
+      })
+      .store(in: &cancellables)
+  }
+  
   func getDetailGame() {
     loadingState = true
     detailUseCase.getDetailGame()

@@ -23,6 +23,7 @@ class DiscoveryByRatingPresenter: ObservableObject {
   
   @Published var errorMessage: String = ""
   @Published var loadingState: Bool = false
+  @Published var gameUpdated: DetailGameModel?
   
   init(discoveryByRatingUseCase: DiscoveryByRatingUseCase) {
     self.discoveryByRatingUseCase = discoveryByRatingUseCase
@@ -30,6 +31,23 @@ class DiscoveryByRatingPresenter: ObservableObject {
       GenreFilterDropdownOptionModel(key: DiscoveryByRatingPresenter.uniqueKey, value: "Best Rating"),
       GenreFilterDropdownOptionModel(key: DiscoveryByRatingPresenter.uniqueKey, value: "Worst Rating"),
     ]
+  }
+  
+  func updateFavoriteGame(id: Int, isFavorite: Bool){
+    discoveryByRatingUseCase.updateFavoriteGame(id: id, isFavorite: isFavorite)
+      .receive(on: RunLoop.main)
+      .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure:
+          self.errorMessage = String(describing: completion)
+          print("Update Favorite ERROR: \(completion)")
+        case .finished:
+          print("Update Favorite FINISHED")
+        }
+      }, receiveValue: { game in
+        self.gameUpdated = game
+      })
+      .store(in: &cancellables)
   }
   
   func getGamesFromBest(isBest: Bool) {

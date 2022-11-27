@@ -17,6 +17,7 @@ final class DetailGameMapper {
     let newDetailGame = GameEntity()
     
     newDetailGame.id = result.id ?? 0
+    newDetailGame.isFavorite = false //default for first store
     newDetailGame.name = result.name ?? "Unknown Name"
     newDetailGame.name_original = result.name_original ?? "Unknown Original Name"
     newDetailGame.slug = result.slug ?? "Unknown Slug"
@@ -172,6 +173,7 @@ final class DetailGameMapper {
       let newDetailGame = GameEntity()
       
       newDetailGame.id = result.id ?? 0
+      newDetailGame.isFavorite = false //default for first store
       newDetailGame.name = result.name ?? "Unknown Name"
       newDetailGame.name_original = result.name_original ?? "Unknown Original Name"
       newDetailGame.slug = result.slug ?? "Unknown Slug"
@@ -328,6 +330,7 @@ final class DetailGameMapper {
       let newDetailGame = GameEntity()
       
       newDetailGame.id = result.id ?? 0
+      newDetailGame.isFavorite = false //default for first store
       newDetailGame.name = result.name ?? "Unknown Name"
       newDetailGame.released = result.released ?? "Unknown released"
       newDetailGame.background_image = result.background_image ?? ""
@@ -346,6 +349,7 @@ final class DetailGameMapper {
     return detailGameEntities.map { result in
       return DetailGameModel(
         id: Int(result.id),
+        isFavorite: result.isFavorite,
         slug: result.slug,
         name: result.name,
         nameOriginal: result.name_original,
@@ -449,6 +453,7 @@ final class DetailGameMapper {
   ) -> DetailGameModel {
     return DetailGameModel(
       id: Int(result.id),
+      isFavorite: result.isFavorite,
       slug: result.slug,
       name: result.name,
       nameOriginal: result.name_original,
@@ -544,6 +549,117 @@ final class DetailGameMapper {
       },
       descriptionRaw: result.description_raw
     )
+  }
+  
+  static func mapDetailGameEntitiesToDomain(
+    input gameEntities: [GameEntity]
+  ) -> [DetailGameModel] {
+    var arrayRes: [DetailGameModel] = [DetailGameModel]()
+    
+    for result in gameEntities{
+      let temp =  DetailGameModel(
+        id: Int(result.id),
+        isFavorite: result.isFavorite,
+        slug: result.slug,
+        name: result.name,
+        nameOriginal: result.name_original,
+        description: result.desc,
+        released: result.released,
+        updated: result.updated,
+        backgroundImage: result.background_image,
+        backgroundImageAdditional: result.background_image_additional,
+        website: result.website,
+        rating: result.rating,
+        added: result.added,
+        playtime: result.playtime,
+        achievementsCount: result.ratings_count,
+        ratingsCount: result.reviews_count,
+        suggestionsCount: result.suggestions_count,
+        reviewsCount: result.achievements_count,
+        parentPlatforms: result.parent_platforms.map { platform in
+          return PlatformModel(
+            id: platform.id,
+            name: platform.name,
+            slug: platform.slug
+          )
+        },
+        platforms: result.platforms.map { data in
+          return DetailPlatformModel(
+            id: data.id,
+            platform: PlatformDetailsModel(
+              id: data.platform!.id,
+              name: data.platform?.name,
+              slug: data.platform?.slug,
+              image: data.platform?.image,
+              yearEnd: data.platform?.year_end,
+              yearStart: data.platform?.year_start,
+              gamesCount: data.platform?.games_count,
+              imageBackground: data.platform?.image_background
+            ),
+            releasedAt: data.released_at,
+            requirements: PlatformRequirementModel(
+              id: data.requirements!.id,
+              minimum: data.requirements?.minimum
+            )
+          )
+        },
+        stores: result.stores.map { store in
+           return StoreDetailsModel(
+            id: store.id,
+            url: store.url,
+            store: StoreModel(
+              id: store.store!.id,
+              name: store.store?.name,
+              slug: store.store?.slug,
+              gamesCount: store.store?.games_count,
+              domain: store.store?.domain,
+              imageBackground: store.store?.image_background
+            )
+           )
+        },
+        developers: result.developers.map { developer in
+          return DeveloperInDetailGameModel(
+            id: developer.id,
+            name: developer.name,
+            slug: developer.slug,
+            gamesCount: developer.games_count,
+            imageBackground: developer.image_background
+          )
+        },
+        genres: result.genres.map { genre in
+          return GenreInDetailsModel(
+            id: genre.id,
+            name: genre.name,
+            slug: genre.slug,
+            gamesCount: genre.games_count,
+            imageBackground: genre.image_background
+          )
+        },
+        tags: result.tags.map { tag in
+          return TagModel(
+            id: tag.id,
+            name: tag.name,
+            slug: tag.slug,
+            gamesCount: tag.games_count,
+            imageBackground: tag.image_background
+          )
+        },
+        publishers: result.publishers.map { publisher in
+          return PublisherModel(
+            id: publisher.id,
+            name: publisher.name,
+            slug: publisher.slug,
+            gamesCount: publisher.games_count,
+            imageBackground: publisher.image_background
+          )
+        },
+        descriptionRaw: result.description_raw
+      )
+      
+      arrayRes.append(temp)
+    }
+    
+    return arrayRes
   }
   
   static func mapDetailGameResponsesToDomains(
@@ -675,6 +791,7 @@ final class DetailGameMapper {
     
     return DetailGameModel(
       id: detailGameResponses.id,
+      isFavorite: false, //default 
       slug: detailGameResponses.slug ?? "Unknown slug",
       name: detailGameResponses.name ?? "Unknown Name",
       nameOriginal: detailGameResponses.name_original ?? "Unknown Original Name",

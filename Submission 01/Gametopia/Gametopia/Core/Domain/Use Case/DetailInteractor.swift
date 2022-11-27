@@ -10,6 +10,7 @@ import Combine
 
 protocol DetailUseCase {
   func getDetailGame() -> AnyPublisher<DetailGameModel, Error>
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
 }
 
 class DetailInteractor: DetailUseCase {
@@ -26,6 +27,10 @@ class DetailInteractor: DetailUseCase {
 
   func getDetailGame() -> AnyPublisher<DetailGameModel, Error> {
     return repository.getGameDetail(id: id, isAdd: self.isAdd)
+  }
+  
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>{
+    return repository.updateFavoriteGame(id: id, isFavorite: isFavorite)
   }
 
 }

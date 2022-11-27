@@ -12,6 +12,7 @@ protocol HomeUseCase {
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error>
   func getListGenres() -> AnyPublisher<[GenreModel], Error>
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
 }
 
 class HomeInteractor: HomeUseCase {
@@ -31,6 +32,10 @@ class HomeInteractor: HomeUseCase {
   
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error> {
     return repository.getListDevelopers()
+  }
+  
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>{
+    return repository.updateFavoriteGame(id: id, isFavorite: isFavorite)
   }
 
 }

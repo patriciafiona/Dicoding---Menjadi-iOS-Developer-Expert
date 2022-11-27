@@ -14,6 +14,7 @@ class HomePresenter: ObservableObject {
   private let homeUseCase: HomeUseCase
 
   @Published var games: [DetailGameModel] = []
+  @Published var gameUpdated: DetailGameModel?
   @Published var genres: [GenreModel] = []
   @Published var developers: [DeveloperModel] = []
   
@@ -78,6 +79,24 @@ class HomePresenter: ObservableObject {
         }
       }, receiveValue: { developers in
         self.developers = developers
+      })
+      .store(in: &cancellables)
+  }
+  
+  func updateFavoriteGame(id: Int, isFavorite: Bool){
+    homeUseCase.updateFavoriteGame(id: id, isFavorite: isFavorite)
+      .receive(on: RunLoop.main)
+      .sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure:
+          self.errorMessage = String(describing: completion)
+          print("Update Favorite ERROR: \(completion)")
+        case .finished:
+          self.discoveryLoadingState = false
+          print("Update Favorite FINISHED")
+        }
+      }, receiveValue: { game in
+        self.gameUpdated = game
       })
       .store(in: &cancellables)
   }

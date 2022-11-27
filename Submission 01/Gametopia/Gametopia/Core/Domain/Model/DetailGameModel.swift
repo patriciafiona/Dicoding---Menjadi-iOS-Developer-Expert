@@ -9,6 +9,7 @@ import Foundation
 
 struct DetailGameModel: Equatable, Identifiable {
   let id: Int?
+  let isFavorite: Bool?
   let slug, name, nameOriginal, description: String?
   let released: String?
   let updated: String?

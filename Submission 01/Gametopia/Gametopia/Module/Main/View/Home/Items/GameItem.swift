@@ -10,7 +10,9 @@ import Kingfisher
 import SkeletonUI
 
 struct GameItem: View {
-    var game: DetailGameModel
+  @ObservedObject var presenter: HomePresenter
+  @State var game: DetailGameModel
+  @State private var _isFavorite: Bool = false
   
     var body: some View {
       VStack(alignment: .leading, spacing: 0){
@@ -77,13 +79,15 @@ struct GameItem: View {
             .appearance(type: .solid(color: .yellow, background: .black))
           }
           Button(action: {
-            //Set it to favorite
+            _isFavorite = !_isFavorite
+            presenter.updateFavoriteGame(id: game.id!, isFavorite: _isFavorite)
+            presenter.getGames()
           }) {
             Image(
-              systemName: "heart.circle"
+              systemName: _isFavorite == true ? "heart.circle.fill" : "heart.circle"
             )
             .font(.system(size: 18))
-            .tint(Color.gray)
+            .tint(_isFavorite == true ?.red : .gray)
           }
         }
         .padding(10)
@@ -95,5 +99,8 @@ struct GameItem: View {
       )
       .background(Color(red: 67/255, green: 67/255, blue: 67/255))
       .cornerRadius(10)
+      .onAppear{
+        _isFavorite = game.isFavorite ?? false
+      }
     }
 }

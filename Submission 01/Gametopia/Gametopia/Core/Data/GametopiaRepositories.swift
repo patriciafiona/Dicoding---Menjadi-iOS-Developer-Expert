@@ -17,6 +17,9 @@ protocol GametopiaRepositoryProtocol {
   
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
   func getGameDetail(id: Int, isAdd: Bool) -> AnyPublisher<DetailGameModel, Error>
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error>
+  
+  func getAllFavoriteGame() -> AnyPublisher<[DetailGameModel], Error>
 }
 
 final class GametopiaRepository: NSObject {
@@ -37,6 +40,34 @@ final class GametopiaRepository: NSObject {
 }
 
 extension GametopiaRepository: GametopiaRepositoryProtocol {
+  
+  func getAllFavoriteGame() -> AnyPublisher<[DetailGameModel], Error> {
+    return self.locale.getAllFavoriteGames()
+      .flatMap { result -> AnyPublisher<[DetailGameModel], Error> in
+        return self.locale.getAllFavoriteGames()
+          .flatMap { _ in self.locale.getAllFavoriteGames()
+            .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
+          }
+          .eraseToAnyPublisher()
+      }.eraseToAnyPublisher()
+  }
+  
+  
+  func updateFavoriteGame(id: Int, isFavorite: Bool) -> AnyPublisher<DetailGameModel, Error> {
+    return self.locale.getDetailGame(id: id )
+      .flatMap { result -> AnyPublisher<DetailGameModel, Error> in
+        return self.remote.getGameDetails(id: id)
+          .map { DetailGameMapper.mapDetailGameResponsesToEntities(input: $0) }
+          .flatMap { res in
+            self.locale.updateFavoriteGames(id: res.id, isFavorite: isFavorite)
+          }
+          .filter { $0 }
+          .flatMap { _ in self.locale.getDetailGame(id: id )
+            .map { DetailGameMapper.mapDetailGameEntityToDomain(input: $0) }
+          }
+          .eraseToAnyPublisher()
+      }.eraseToAnyPublisher()
+  }
 
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error> {
     return self.remote.getAllDiscoveryGame(sortFromBest: sortFromBest)
@@ -48,26 +79,6 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
           .eraseToAnyPublisher()
       }.eraseToAnyPublisher()
   }
-  
-//  func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[DetailGameModel], Error> {
-//    return self.locale.getGames()
-//      .flatMap { result -> AnyPublisher<[DetailGameModel], Error> in
-//        if result.isEmpty {
-//          return self.remote.getAllDiscoveryGame(sortFromBest: sortFromBest )
-//            .map { DetailGameMapper.mapDetailGameResponseToEntities(input: $0) }
-//            .flatMap { self.locale.addGames(from: $0) }
-//            .filter { $0 }
-//            .flatMap { _ in self.locale.getGames()
-//              .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
-//            }
-//            .eraseToAnyPublisher()
-//        } else {
-//          return self.locale.getBestRatingGames()
-//            .map { DetailGameMapper.mapDetailGameEntitiesToDomains(input: $0) }
-//            .eraseToAnyPublisher()
-//        }
-//      }.eraseToAnyPublisher()
-//  }
   
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error> {
     return self.locale.getBestRatingGames()

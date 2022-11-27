@@ -63,8 +63,6 @@ struct RootDiscoverList: View{
       templateSkeleton(), templateSkeleton(), templateSkeleton(), templateSkeleton()
     ]
     
-    @State private var myFavGame: [String] = []
-    
     var body: some View {
         NavigationView {
             ScrollView{
@@ -107,17 +105,6 @@ struct RootDiscoverList: View{
                                     if let statusFilter = selectedOption?.value == options![0].value ? true: false{
                                       presenter.getGamesFromBest(isBest: statusFilter)
                                     }
-                                    
-                                  //TODO ADD REMOVE GAME TO FAVORITE
-//                                    myFavGame.removeAll()
-//                                    let queue = DispatchQueue(label: "com.patriciafiona.gametopia")
-//                                    queue.sync {
-//                                        let favorites = realm.objects(Favorites.self)
-//                                        for i in 0..<favorites.count{
-//                                            myFavGame.append(favorites[i]._id)
-//                                        }
-//                                    }
-                                    
                                     self.onOptionSelected?(option)
                                 })
                             }
@@ -134,7 +121,7 @@ struct RootDiscoverList: View{
                         LazyVStack{
                           ForEach(presenter.games, id: \.self.id){ game in
                             self.presenter.linkBuilder(for: game.id!) {
-                              GameRatingItem(game: game)
+                              GameRatingItem(presenter: presenter, game: game)
                             }.buttonStyle(PlainButtonStyle())
                           }
                         }
@@ -143,7 +130,7 @@ struct RootDiscoverList: View{
                     }else{
                         if #available(iOS 16.0, *) {
                             SkeletonList(with: templateSkeletonView, quantity: templateSkeletonView.count) { loading, user in
-                              GameRatingItem(game: nil, myFavGame: [])
+                              GameRatingItem(presenter: presenter, game: nil)
                                     .skeleton(with: loading)
                                     .shape(type: .rectangle)
                                     .appearance(type: .solid(color: .yellow, background: .black))
@@ -154,7 +141,7 @@ struct RootDiscoverList: View{
                             .zIndex(-1)
                         }else{
                             SkeletonList(with: templateSkeletonView, quantity: templateSkeletonView.count) { loading, user in
-                              GameRatingItem(game: nil, myFavGame: [])
+                              GameRatingItem(presenter: presenter, game: nil)
                                     .skeleton(with: loading)
                                     .shape(type: .rectangle)
                                     .appearance(type: .solid(color: .yellow, background: .black))
@@ -196,6 +183,7 @@ struct RootDiscoverList: View{
           if let statusFilter = selectedOption?.value == options![0].value ? true: false{
             presenter.getGamesFromBest(isBest: statusFilter)
           }
+          self.presenter.objectWillChange.send()
         }
     }
 }
@@ -249,8 +237,8 @@ struct DropdownRow: View {
 }
 
 struct GameRatingItem: View{
+    @ObservedObject var presenter: DiscoveryByRatingPresenter
     @State var game: GameModel?
-    @State var myFavGame: [String] = []
     
     var body: some View {
         HStack{
@@ -325,56 +313,6 @@ struct GameRatingItem: View{
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Button(action: {
-                    //TODO:: Add or remove fav
-                  
-//                    let fav = Favorites()
-//                    fav._id = String(game?.id ?? 0)
-//                    fav.name = (game?.name)!
-//
-//                    if realm.object(ofType: Favorites.self, forPrimaryKey: String((game?.id)!)) != nil{
-//                        //remove
-//                        try! realm.write {
-//                            let item = realm.objects(Favorites.self).where {
-//                                $0._id == String(game?.id ?? 0)
-//                            }
-//                            realm.delete(item)
-//
-//                            //update the list of id
-//                            myFavGame.removeAll()
-//                            let queue = DispatchQueue(label: "com.patriciafiona.gametopia")
-//                            queue.sync {
-//                                let favorites = realm.objects(Favorites.self)
-//                                for i in 0..<favorites.count{
-//                                    myFavGame.append(favorites[i]._id)
-//                                }
-//                            }
-//                        }
-//                    }else{
-//                        //add
-//                        try! realm.write {
-//                            realm.add(fav)
-//                            myFavGame.append(String((game?.id)!))
-//                        }
-//                    }
-                }) {
-                    if myFavGame.contains(String(game?.id ?? 0)){
-                        Image(systemName: "heart.circle.fill")
-                            .foregroundColor(.red)
-                            .skeleton(with: game == nil)
-                            .shape(type: .circle)
-                            .appearance(type: .solid(color: .yellow, background: .black))
-                    }else{
-                        Image(systemName: "heart.circle")
-                            .foregroundColor(.gray)
-                            .skeleton(with: game == nil)
-                            .shape(type: .circle)
-                            .appearance(type: .solid(color: .yellow, background: .black))
-                    }
-                }
-                .frame(width: 50)
-                
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 10)

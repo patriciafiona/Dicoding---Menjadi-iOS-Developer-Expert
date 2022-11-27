@@ -38,5 +38,10 @@ final class Injection: NSObject {
     let repository = provideRepository()
     return DiscoveryByRatingInteractor(repository: repository)
   }
+  
+  func provideMyFavorites() -> MyFavoriteUseCase {
+    let repository = provideRepository()
+    return MyFavoritesInteractor(repository: repository)
+  }
 
 }

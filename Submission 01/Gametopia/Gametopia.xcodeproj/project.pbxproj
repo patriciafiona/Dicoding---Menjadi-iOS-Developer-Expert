@@ -11,6 +11,9 @@
 		F7564FAC29310E5900CECC89 /* DetailGenreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FAB29310E5900CECC89 /* DetailGenreInteractor.swift */; };
 		F7564FAE2931148700CECC89 /* DetailGenreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FAD2931148700CECC89 /* DetailGenreResponse.swift */; };
 		F7564FB12931AFD900CECC89 /* DetailGenreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FB02931AFD900CECC89 /* DetailGenreRouter.swift */; };
+		F7564FB729339E7300CECC89 /* MyFavoriteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FB629339E7300CECC89 /* MyFavoriteUseCase.swift */; };
+		F7564FB92933A23800CECC89 /* FavoritePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FB82933A23800CECC89 /* FavoritePresenter.swift */; };
+		F7564FBB2933A2D100CECC89 /* FavoriteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FBA2933A2D100CECC89 /* FavoriteRouter.swift */; };
 		F7EBBEAB29285BA700D89943 /* GametopiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBEAA29285BA700D89943 /* GametopiaApp.swift */; };
 		F7EBBEAD29285BA700D89943 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBEAC29285BA700D89943 /* HomeView.swift */; };
 		F7EBBEAF29285BA800D89943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EBBEAE29285BA800D89943 /* Assets.xcassets */; };
@@ -80,6 +83,9 @@
 		F7564FAB29310E5900CECC89 /* DetailGenreInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenreInteractor.swift; sourceTree = "<group>"; };
 		F7564FAD2931148700CECC89 /* DetailGenreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenreResponse.swift; sourceTree = "<group>"; };
 		F7564FB02931AFD900CECC89 /* DetailGenreRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGenreRouter.swift; sourceTree = "<group>"; };
+		F7564FB629339E7300CECC89 /* MyFavoriteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoriteUseCase.swift; sourceTree = "<group>"; };
+		F7564FB82933A23800CECC89 /* FavoritePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePresenter.swift; sourceTree = "<group>"; };
+		F7564FBA2933A2D100CECC89 /* FavoriteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRouter.swift; sourceTree = "<group>"; };
 		F7EBBEA729285BA700D89943 /* Gametopia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gametopia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EBBEAA29285BA700D89943 /* GametopiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GametopiaApp.swift; sourceTree = "<group>"; };
 		F7EBBEAC29285BA700D89943 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -242,7 +248,7 @@
 				F7EBBF54292BBF9400D89943 /* DiscoveryByRating */,
 				F7EBBF44292A715B00D89943 /* GenreDetail */,
 				F7EBBEC929287C8500D89943 /* Splash */,
-				F7EBBEC229285F7800D89943 /* Home */,
+				F7EBBEC229285F7800D89943 /* Main */,
 				F7EBBEC329285F8000D89943 /* GameDetail */,
 			);
 			path = Module;
@@ -298,7 +304,7 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		F7EBBEC229285F7800D89943 /* Home */ = {
+		F7EBBEC229285F7800D89943 /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				F7EBBF0B2928BD1E00D89943 /* Presenter */,
@@ -306,7 +312,7 @@
 				F7EBBF0D2928BD3100D89943 /* Router */,
 				F7EBBEAC29285BA700D89943 /* HomeView.swift */,
 			);
-			path = Home;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		F7EBBEC329285F8000D89943 /* GameDetail */ = {
@@ -423,6 +429,7 @@
 				F7EBBF1F2928CDA400D89943 /* DetailInteractor.swift */,
 				F7EBBF5D292BC3C700D89943 /* DiscoveryByRatingInteractor.swift */,
 				F7564FAB29310E5900CECC89 /* DetailGenreInteractor.swift */,
+				F7564FB629339E7300CECC89 /* MyFavoriteUseCase.swift */,
 			);
 			path = "Use Case";
 			sourceTree = "<group>";
@@ -442,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				F7EBBF0E2928CADA00D89943 /* HomePresenter.swift */,
+				F7564FB82933A23800CECC89 /* FavoritePresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -461,6 +469,7 @@
 			isa = PBXGroup;
 			children = (
 				F7EBBF102928CB1400D89943 /* HomeRouter.swift */,
+				F7564FBA2933A2D100CECC89 /* FavoriteRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -731,6 +740,7 @@
 				F7EBBF1C2928CC8B00D89943 /* Utils.swift in Sources */,
 				F7EBBF61292BC49600D89943 /* DiscoveryByRatingRouter.swift in Sources */,
 				F7EBBF182928CC2700D89943 /* DetailRouter.swift in Sources */,
+				F7564FB729339E7300CECC89 /* MyFavoriteUseCase.swift in Sources */,
 				F7EBBEFB2928AFBB00D89943 /* URLError.swift in Sources */,
 				F7EBBF302929A55E00D89943 /* GenreMapper.swift in Sources */,
 				F7EBBED92928956500D89943 /* HomeTab.swift in Sources */,
@@ -745,6 +755,7 @@
 				F7EBBF082928B75200D89943 /* GameModel.swift in Sources */,
 				F7EBBF392929DD7C00D89943 /* DeveloperResponse.swift in Sources */,
 				F7EBBF372929CB2800D89943 /* GenreItem.swift in Sources */,
+				F7564FBB2933A2D100CECC89 /* FavoriteRouter.swift in Sources */,
 				F7EBBF2E2929A38D00D89943 /* GenreModel.swift in Sources */,
 				F7EBBEDF2928958A00D89943 /* ProfileTab.swift in Sources */,
 				F7EBBEE52928A7A500D89943 /* RemoteDataSource.swift in Sources */,
@@ -769,6 +780,7 @@
 				F7564FB12931AFD900CECC89 /* DetailGenreRouter.swift in Sources */,
 				F7EBBEEE2928A82500D89943 /* GameResponse.swift in Sources */,
 				F7EBBEE129289BFF00D89943 /* ImageCarouselTemplate.swift in Sources */,
+				F7564FB92933A23800CECC89 /* FavoritePresenter.swift in Sources */,
 				F7EBBF1E2928CCD100D89943 /* PlatformItem.swift in Sources */,
 				F7EBBECB29287C9600D89943 /* SplashView.swift in Sources */,
 				F7EBBEFD2928AFEB00D89943 /* Injection.swift in Sources */,

@@ -25,6 +25,9 @@ protocol LocaleDataSourceProtocol: AnyObject {
   func addGame(from game: GameEntity) -> AnyPublisher<Bool, Error>
   func updateGames(gameEntity: GameEntity) -> AnyPublisher<Bool, Error>
   func getDetailGame(id: Int) -> AnyPublisher<GameEntity, Error>
+  
+  func updateFavoriteGames(id: Int, isFavorite: Bool) -> AnyPublisher<Bool, Error>
+  func getAllFavoriteGames() -> AnyPublisher<[GameEntity], Error>
 }
 
 final class LocaleDataSource: NSObject {
@@ -40,6 +43,41 @@ final class LocaleDataSource: NSObject {
 }
 
 extension LocaleDataSource: LocaleDataSourceProtocol {
+  func getAllFavoriteGames() -> AnyPublisher<[GameEntity], Error> {
+    return Future<[GameEntity], Error> { completion in
+      if let realm = self.realm {
+        let detailGames: Results<GameEntity> = {
+          realm.objects(GameEntity.self)
+            .filter("isFavorite == true")
+        }()
+        completion(.success(detailGames.toArray(ofType: GameEntity.self, limit: 10)))
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+  
+  func updateFavoriteGames(id: Int, isFavorite: Bool) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      if let realm = self.realm {
+        do {
+          let currentData = realm.objects(GameEntity.self).where {
+            $0.id == id
+        }.first!
+          //Update the nil description
+          try realm.write {
+            currentData.setValue(isFavorite, forKey: "isFavorite")
+          }
+          completion(.success(true))
+        } catch {
+          completion(.failure(DatabaseError.requestFailed))
+        }
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+  
   func getSortedGames(sortedFromBest: Bool) -> AnyPublisher<[GameEntity], Error> {
     return Future<[GameEntity], Error> { completion in
       if let realm = self.realm {

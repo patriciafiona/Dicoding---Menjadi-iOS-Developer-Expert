@@ -8,6 +8,7 @@
 import SwiftUI
 import Kingfisher
 import SkeletonUI
+import Combine
 
 struct DetailView: View {
   @ObservedObject var presenter: DetailPresenter
@@ -20,7 +21,7 @@ struct DetailView: View {
 struct RootContent: View{
   @Environment(\.presentationMode) var presentationMode
   @ObservedObject var presenter: DetailPresenter
-  @State var isFavorite: Bool = false
+  @State private var isFavorite: Bool = false
   
   var body: some View{
     NavigationView {
@@ -46,7 +47,8 @@ struct RootContent: View{
         }
       })
       .navigationBarItems(trailing: Button {
-        //TODO: ADD OR REMOVE FROM DATABASE
+        isFavorite = !isFavorite
+        presenter.updateFavoriteGame(id: (presenter.detailGame?.id)!, isFavorite: isFavorite )
       } label: {
         Image(systemName: isFavorite == true ? "heart.circle.fill" : "heart.circle")
           .foregroundColor(isFavorite == true ?.red : .gray)
@@ -64,6 +66,9 @@ struct RootContent: View{
         self.presenter.getDetailGame()
       }
     }
+    .onReceive(Just(presenter.detailGame?.isFavorite), perform: { value in
+      self.isFavorite =  presenter.detailGame?.isFavorite ?? false
+    })
   }
 }
 
