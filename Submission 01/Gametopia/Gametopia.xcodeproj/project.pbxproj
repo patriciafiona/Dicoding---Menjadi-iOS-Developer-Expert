@@ -14,6 +14,7 @@
 		F7564FB729339E7300CECC89 /* MyFavoriteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FB629339E7300CECC89 /* MyFavoriteUseCase.swift */; };
 		F7564FB92933A23800CECC89 /* FavoritePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FB82933A23800CECC89 /* FavoritePresenter.swift */; };
 		F7564FBB2933A2D100CECC89 /* FavoriteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7564FBA2933A2D100CECC89 /* FavoriteRouter.swift */; };
+		F7564FBD2934204E00CECC89 /* no_favorite.json in Resources */ = {isa = PBXBuildFile; fileRef = F7564FBC2934204E00CECC89 /* no_favorite.json */; };
 		F7EBBEAB29285BA700D89943 /* GametopiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBEAA29285BA700D89943 /* GametopiaApp.swift */; };
 		F7EBBEAD29285BA700D89943 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EBBEAC29285BA700D89943 /* HomeView.swift */; };
 		F7EBBEAF29285BA800D89943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EBBEAE29285BA800D89943 /* Assets.xcassets */; };
@@ -86,6 +87,7 @@
 		F7564FB629339E7300CECC89 /* MyFavoriteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoriteUseCase.swift; sourceTree = "<group>"; };
 		F7564FB82933A23800CECC89 /* FavoritePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePresenter.swift; sourceTree = "<group>"; };
 		F7564FBA2933A2D100CECC89 /* FavoriteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRouter.swift; sourceTree = "<group>"; };
+		F7564FBC2934204E00CECC89 /* no_favorite.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = no_favorite.json; path = ../../../../Assets/Lottie/no_favorite.json; sourceTree = "<group>"; };
 		F7EBBEA729285BA700D89943 /* Gametopia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gametopia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EBBEAA29285BA700D89943 /* GametopiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GametopiaApp.swift; sourceTree = "<group>"; };
 		F7EBBEAC29285BA700D89943 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 		F7EBBECC292880FB00D89943 /* Lotties */ = {
 			isa = PBXGroup;
 			children = (
+				F7564FBC2934204E00CECC89 /* no_favorite.json */,
 				F7EBBECF2928810F00D89943 /* favorite.json */,
 				F7EBBECD2928810F00D89943 /* loading.json */,
 				F7EBBECE2928810F00D89943 /* profile_badge.json */,
@@ -676,6 +679,7 @@
 				F7EBBEB229285BA800D89943 /* Preview Assets.xcassets in Resources */,
 				F7EBBED22928810F00D89943 /* favorite.json in Resources */,
 				F7EBBEC729287C3800D89943 /* VerminVibes.ttf in Resources */,
+				F7564FBD2934204E00CECC89 /* no_favorite.json in Resources */,
 				F7EBBED12928810F00D89943 /* profile_badge.json in Resources */,
 				F7EBBEAF29285BA800D89943 /* Assets.xcassets in Resources */,
 				F7EBBED02928810F00D89943 /* loading.json in Resources */,

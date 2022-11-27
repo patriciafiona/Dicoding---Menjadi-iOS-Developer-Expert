@@ -50,7 +50,7 @@ extension LocaleDataSource: LocaleDataSourceProtocol {
           realm.objects(GameEntity.self)
             .filter("isFavorite == true")
         }()
-        completion(.success(detailGames.toArray(ofType: GameEntity.self, limit: 10)))
+        completion(.success(detailGames.toArray(ofType: GameEntity.self)))
       } else {
         completion(.failure(DatabaseError.invalidInstance))
       }

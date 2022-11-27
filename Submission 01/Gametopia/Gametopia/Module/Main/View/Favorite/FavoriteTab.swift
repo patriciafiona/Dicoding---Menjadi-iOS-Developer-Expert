@@ -7,16 +7,9 @@
 
 import SwiftUI
 import Kingfisher
-import SkeletonUI
 
 struct FavoriteTab: View {
   @ObservedObject var presenter: FavoritesPresenter
-  
-  private let templateSkeletonView = [
-    templateSkeleton(), templateSkeleton(), templateSkeleton(), templateSkeleton(),
-    templateSkeleton(), templateSkeleton(), templateSkeleton(), templateSkeleton(),
-    templateSkeleton(), templateSkeleton(), templateSkeleton(), templateSkeleton()
-  ]
   
   var body: some View {
     ZStack {
@@ -37,57 +30,74 @@ struct FavoriteTab: View {
         .background(.black)
         
       } else {
-        ScrollView(.vertical, showsIndicators: false){
-          VStack(alignment: .leading){
-            Text("My Favorites")
-              .font(
-                Font.custom("EvilEmpire", size: 24, relativeTo: .title)
-              )
-              .foregroundColor(.yellow)
-            
-            if(!presenter.games.isEmpty){
-              LazyVStack{
-                ForEach(presenter.games, id: \.self.id){ game in
-                  self.presenter.linkBuilder(for: game.id!) {
-                    GameFavoriteItem(presenter: presenter, game: game)
-                  }.buttonStyle(PlainButtonStyle())
-                }
-              }
-              .padding(.top, 10)
-              .zIndex(-1)
-            }else{
-              if #available(iOS 16.0, *) {
-                SkeletonList(with: templateSkeletonView, quantity: templateSkeletonView.count) { loading, user in
-                  GameFavoriteItem(presenter: presenter, game: nil)
-                    .skeleton(with: loading)
-                    .shape(type: .rectangle)
-                    .appearance(type: .solid(color: .yellow, background: .black))
-                    .listRowBackground(Color.black)
-                }
-                .frame(height: 800)
-                .scrollContentBackground(.hidden)
-                .zIndex(-1)
-              }else{
-                SkeletonList(with: templateSkeletonView, quantity: templateSkeletonView.count) { loading, user in
-                  GameFavoriteItem(presenter: presenter, game: nil)
-                    .skeleton(with: loading)
-                    .shape(type: .rectangle)
-                    .appearance(type: .solid(color: .yellow, background: .black))
-                    .listRowBackground(Color.black)
-                }
-                .frame(height: 800)
-                .background(.black)
-                .zIndex(-1)
+        VStack(alignment: .leading){
+          Text("My Favorites")
+            .font(
+              Font.custom("EvilEmpire", size: 24, relativeTo: .title)
+            )
+            .foregroundColor(.yellow)
+          
+          if(!presenter.games.isEmpty){
+            LazyVStack{
+              ForEach(presenter.games, id: \.self.id){ game in
+                self.presenter.linkBuilder(for: game.id!) {
+                  GameFavoriteItem(presenter: presenter, game: game)
+                }.buttonStyle(PlainButtonStyle())
               }
             }
+            .padding(.top, 10)
+            .zIndex(-1)
+          }else{
+            VStack(alignment: .center){
+              Spacer()
+              ZStack{
+                Circle()
+                  .fill(.white)
+                  .frame(width: 100 * 2, height: 100 * 2)
+                LottieView(
+                  name: "no_favorite",
+                  loopMode: .playOnce
+                )
+                .frame(
+                  width: 150,
+                  height: 150,
+                  alignment: .center
+                )
+              }
+              Spacer()
+              Text("No Favorite")
+                .foregroundColor(.white)
+                .fontWeight(.bold)
+                .font(
+                  Font.custom(
+                    "VerminVibesV",
+                    size: 24
+                  )
+                )
+              Spacer()
+            }
+            .frame(
+              minWidth: 0,
+              maxWidth: .infinity,
+              minHeight: 0,
+              maxHeight: .infinity,
+              alignment: .center
+            )
           }
         }
+        .padding(16)
+        .frame(
+          minWidth: 0,
+          maxWidth: .infinity,
+          minHeight: 0,
+          maxHeight: .infinity,
+          alignment: .topLeading
+        )
       }
     }
     .onAppear{
-      if(presenter.games.count == 0){
-        presenter.getFavoritesGames()
-      }
+      presenter.getFavoritesGames()
+      self.presenter.objectWillChange.send()
     }
   }
 }
