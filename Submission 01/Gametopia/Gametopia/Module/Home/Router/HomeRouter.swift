@@ -16,6 +16,12 @@ class HomeRouter {
     return DetailView(presenter: presenter)
   }
   
+  func makeDetailGameFromDeveloperView(for id: Int) -> some View {
+    let detailUseCase = Injection.init().provideDetail(id: id, isAdd: true)
+    let presenter = DetailPresenter(detailUseCase: detailUseCase)
+    return DetailView(presenter: presenter)
+  }
+  
   func makeDiscoverByRatingView() -> some View {
     let discoverUseCase = Injection.init().provideDiscoveryByRating()
     let presenter = DiscoveryByRatingPresenter(discoveryByRatingUseCase: discoverUseCase)

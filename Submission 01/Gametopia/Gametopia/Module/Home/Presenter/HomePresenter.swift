@@ -87,14 +87,25 @@ class HomePresenter: ObservableObject {
     @ViewBuilder content: () -> Content
   ) -> some View {
     NavigationLink(
-    destination: router.makeDetailView(for: id)) { content() }
+      destination: router.makeDetailView(for: id)
+    ) { content() }
+  }
+  
+  func linkDetailFromDeveloperBuilder<Content: View>(
+    for id: Int,
+    @ViewBuilder content: () -> Content
+  ) -> some View {
+    NavigationLink(
+      destination: router.makeDetailGameFromDeveloperView(for: id)
+    ) { content() }
   }
   
   func discoveryLinkBuilder<Content: View>(
     @ViewBuilder content: () -> Content
   ) -> some View {
     NavigationLink(
-    destination: router.makeDiscoverByRatingView()) { content() }
+      destination: router.makeDiscoverByRatingView()
+    ) { content() }
   }
   
   func genreLinkBuilder<Content: View>(
@@ -102,7 +113,8 @@ class HomePresenter: ObservableObject {
     @ViewBuilder content: () -> Content
   ) -> some View {
     NavigationLink(
-    destination: router.makeDetailGenreView(for: id )) { content() }
+      destination: router.makeDetailGenreView(for: id )
+    ) { content() }
   }
   
 }

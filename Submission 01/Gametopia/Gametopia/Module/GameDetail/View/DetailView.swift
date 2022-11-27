@@ -79,7 +79,7 @@ struct TopSection: View {
               .resizable()
               .scaledToFit()
           }
-          .cacheMemoryOnly()
+          .cacheOriginalImage()
           .fade(duration: 0.25)
           .resizable()
           .aspectRatio(contentMode: .fill)

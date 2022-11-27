@@ -24,9 +24,9 @@ final class Injection: NSObject {
     return HomeInteractor(repository: repository)
   }
 
-  func provideDetail(id: Int) -> DetailUseCase {
+  func provideDetail(id: Int, isAdd: Bool = false) -> DetailUseCase {
     let repository = provideRepository()
-    return DetailInteractor(repository: repository, id: id)
+    return DetailInteractor(repository: repository, id: id, isAdd: isAdd)
   }
   
   func provideDetailGenre(id: Int) -> DetailGenreUseCase {

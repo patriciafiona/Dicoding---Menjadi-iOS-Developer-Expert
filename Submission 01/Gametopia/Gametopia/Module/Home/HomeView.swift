@@ -9,36 +9,40 @@ import SwiftUI
 
 struct HomeView: View {
   @ObservedObject var presenter: HomePresenter
+  @State var tabSelection: Tabs = .tabHome
   
+  enum Tabs{
+      case tabHome, tabSearch, tabFavorite, tabProfile
+  }
     var body: some View {
         NavigationView{
-            TabView {
+            TabView(selection: $tabSelection) {
                HomeTab(presenter: presenter)
                  .tabItem {
                     Image(systemName: "house")
-                     .tint(Color.indigo)
                     Text("Home")
-               }
+                 }
+                 .tag(Tabs.tabHome)
                SearchTab(presenter: presenter)
                  .tabItem {
                     Image(systemName: "magnifyingglass")
-                     .tint(Color.indigo)
                     Text("Search")
-                     
                  }
+                 .tag(Tabs.tabSearch)
                 FavoriteTab(presenter: presenter)
                   .tabItem {
                      Image(systemName: "heart.circle.fill")
-                      .tint(Color.indigo)
                      Text("Favorites")
-               }
+                  }
+                  .tag(Tabs.tabFavorite)
                 ProfileTab()
                   .tabItem {
                      Image(systemName: "person.circle")
-                      .tint(Color.indigo)
                      Text("Profile")
-               }
+                  }
+                  .tag(Tabs.tabProfile)
             }
+            .accentColor(.yellow)
         }
         .navigationBarBackButtonHidden(true)
     }

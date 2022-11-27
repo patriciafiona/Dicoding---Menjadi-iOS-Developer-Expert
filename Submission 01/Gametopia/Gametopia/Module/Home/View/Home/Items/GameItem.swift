@@ -20,7 +20,7 @@ struct GameItem: View {
                     .resizable()
                     .scaledToFit()
             }
-            .cacheMemoryOnly()
+            .cacheOriginalImage()
             .resizable()
             .clipped()
             .aspectRatio(contentMode: .fill)

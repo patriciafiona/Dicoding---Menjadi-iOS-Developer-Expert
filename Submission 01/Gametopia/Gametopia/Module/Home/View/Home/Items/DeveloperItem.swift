@@ -22,7 +22,7 @@ struct DeveloperItem: View {
               .resizable()
               .scaledToFit()
           }
-          .cacheMemoryOnly()
+          .cacheOriginalImage()
           .fade(duration: 0.25)
           .resizable()
           .aspectRatio(contentMode: .fill)
@@ -70,7 +70,7 @@ private struct DeveloperHeaderOverlay: View{
           LazyVStack{
             ForEach(developer.games.prefix(3), id: \.id){ game in
               ZStack{
-                self.presenter.linkBuilder(for: game.id!) {
+                self.presenter.linkDetailFromDeveloperBuilder(for: game.id!) {
                   DeveloperGameItem(game: game)
                 }.buttonStyle(PlainButtonStyle())
               }

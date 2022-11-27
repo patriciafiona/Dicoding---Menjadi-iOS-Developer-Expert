@@ -10,14 +10,13 @@ import Combine
  
 protocol GametopiaRepositoryProtocol {
   func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[GameModel], Error>
-//  func getAllDiscoveryGame(sortFromBest: Bool) -> AnyPublisher<[DetailGameModel], Error>
   func getFewDiscoveryGame() -> AnyPublisher<[DetailGameModel], Error>
   
   func getListGenres() -> AnyPublisher<[GenreModel], Error>
   func getGenreDetail(id: Int) -> AnyPublisher<GenreModel, Error>
   
   func getListDevelopers() -> AnyPublisher<[DeveloperModel], Error>
-  func getGameDetail(id: Int) -> AnyPublisher<DetailGameModel, Error>
+  func getGameDetail(id: Int, isAdd: Bool) -> AnyPublisher<DetailGameModel, Error>
 }
 
 final class GametopiaRepository: NSObject {
@@ -130,14 +129,18 @@ extension GametopiaRepository: GametopiaRepositoryProtocol {
       }.eraseToAnyPublisher()
   }
   
-  func getGameDetail(id: Int) -> AnyPublisher<DetailGameModel, Error> {
+  func getGameDetail(id: Int, isAdd: Bool = false) -> AnyPublisher<DetailGameModel, Error> {
     return self.locale.getDetailGame(id: id )
       .flatMap { result -> AnyPublisher<DetailGameModel, Error> in
         if result.desc == "" {
           return self.remote.getGameDetails(id: id)
             .map { DetailGameMapper.mapDetailGameResponsesToEntities(input: $0) }
             .flatMap { res in
-              self.locale.updateGames(gameEntity: res)
+              if(isAdd){
+                return self.locale.addGame(from: res)
+              }else{
+                return self.locale.updateGames(gameEntity: res)
+              }
             }
             .filter { $0 }
             .flatMap { _ in self.locale.getDetailGame(id: id )

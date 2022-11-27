@@ -16,14 +16,16 @@ class DetailInteractor: DetailUseCase {
 
   private let repository: GametopiaRepositoryProtocol
   private let id: Int
+  private var isAdd: Bool = false
   
-  required init(repository: GametopiaRepositoryProtocol, id: Int ){
+  required init(repository: GametopiaRepositoryProtocol, id: Int, isAdd: Bool ){
     self.repository = repository
     self.id = id
+    self.isAdd = isAdd
   }
 
   func getDetailGame() -> AnyPublisher<DetailGameModel, Error> {
-    return repository.getGameDetail(id: id)
+    return repository.getGameDetail(id: id, isAdd: self.isAdd)
   }
 
 }
