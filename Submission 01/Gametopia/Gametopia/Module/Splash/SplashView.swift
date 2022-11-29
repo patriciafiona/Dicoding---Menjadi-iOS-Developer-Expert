@@ -12,13 +12,15 @@ struct SplashView: View {
   
   @EnvironmentObject var homePresenter: HomePresenter
   @EnvironmentObject var favoritePresenter: FavoritesPresenter
+  @EnvironmentObject var searchPresenter: SearchPresenter
   
   var body: some View {
     NavigationView{
       NavigationLink(isActive: $pushNewView) {
         HomeView(
           homePresenter: homePresenter,
-          favoritePresenter: favoritePresenter
+          favoritePresenter: favoritePresenter,
+          searchPresenter: searchPresenter
         )
       } label: {
         SplashContent()

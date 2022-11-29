@@ -98,7 +98,14 @@ struct FavoriteTab: View {
     .onAppear{
       presenter.getFavoritesGames()
       self.presenter.objectWillChange.send()
+      
+      //tab bar appearance
+      let tabBarAppearance = UITabBarAppearance()
+      tabBarAppearance.configureWithDefaultBackground()
+      UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
+    .navigationBarTitle("")
+    .navigationBarHidden(true)
   }
 }
 

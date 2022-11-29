@@ -19,9 +19,13 @@ struct GametopiaApp: App {
       let favoriteUseCase = Injection.init().provideMyFavorites()
       let favoritePresenter = FavoritesPresenter(favoriteUseCase: favoriteUseCase)
       
+      let seachUseCase = Injection.init().provideSearch()
+      let searchPresenter = SearchPresenter(searchUseCase: seachUseCase)
+      
       SplashView()
         .environmentObject(homePresenter)
         .environmentObject(favoritePresenter)
+        .environmentObject(searchPresenter)
     }
     .onChange(of: scenePhase) { phase in
       if phase == .background {

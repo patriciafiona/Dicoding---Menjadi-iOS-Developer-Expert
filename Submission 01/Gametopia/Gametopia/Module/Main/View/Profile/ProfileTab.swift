@@ -48,6 +48,14 @@ struct ProfileTab: View {
         )
         .padding(EdgeInsets.init(top: 16, leading: 20, bottom: 50, trailing: 20))
       }
+      .onAppear{
+        //tab bar appearance
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithDefaultBackground()
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+      }
+      .navigationBarTitle("")
+      .navigationBarHidden(true)
     }
 }
 

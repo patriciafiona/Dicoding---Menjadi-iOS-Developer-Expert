@@ -21,7 +21,7 @@ protocol RemoteDataSourceProtocol: AnyObject {
   func getListDevelopers() -> AnyPublisher<[DeveloperResult], Error>
   func getGameDetails(id: Int) -> AnyPublisher<DetailGameResponse, Error>
   func getGenreDetails(id: Int) -> AnyPublisher<DetailGenreResponse, Error>
-//  func getSearchResults(keyword: String) -> AnyPublisher<[SearchResponse], Error>
+  func getSearchResults(keyword: String) -> AnyPublisher<[SearchResult], Error>
 }
 
 final class RemoteDataSource: NSObject {
@@ -30,6 +30,29 @@ final class RemoteDataSource: NSObject {
 }
 
 extension RemoteDataSource: RemoteDataSourceProtocol {
+  
+  func getSearchResults(keyword: String) -> AnyPublisher<[SearchResult], Error> {
+    let param = ["key": apiKey, "search": keyword]
+    return Future<[SearchResult], Error> { completion in
+      if let url = URL(string: Endpoints.Gets.games.url) {
+        AF.request(
+          url,
+          method: .get,
+          parameters: param
+        )
+        .validate()
+        .responseDecodable(of: SearchResponse.self) { response in
+          switch response.result {
+          case .success(let value):
+            completion(.success(value.results!))
+          case .failure:
+            completion(.failure(URLError.invalidResponse))
+          }
+        }
+      }
+    }.eraseToAnyPublisher()
+  }
+  
   func getGenreDetails(id: Int) -> AnyPublisher<DetailGenreResponse, Error> {
     return Future<DetailGenreResponse, Error> { completion in
       if let url = URL(string: "\(Endpoints.Gets.genres.url)/\(id)") {

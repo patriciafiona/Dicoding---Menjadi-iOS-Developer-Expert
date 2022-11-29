@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
   @ObservedObject var homePresenter: HomePresenter
   @ObservedObject var favoritePresenter: FavoritesPresenter
+  @ObservedObject var searchPresenter: SearchPresenter
   
   @State var tabSelection: Tabs = .tabHome
   
@@ -25,7 +26,7 @@ struct HomeView: View {
                     Text("Home")
                  }
                  .tag(Tabs.tabHome)
-               SearchTab(presenter: homePresenter)
+               SearchTab(presenter: searchPresenter)
                  .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
