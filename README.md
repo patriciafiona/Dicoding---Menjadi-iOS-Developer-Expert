@@ -1,6 +1,9 @@
 # Dicoding---Menjadi iOS Developer Expert
 
-<p align="center">[PREVIEW COMING SOON]</p>
+<p align="center">
+ <image src="https://user-images.githubusercontent.com/32255348/208938153-36c154d5-f1c3-4c4d-ad9c-fbf9e150de04.png" width= 200 />
+</p>
+
 
 <p align="center"><i><b>Figure 1</b> Preview of Gametopia App</i></p>
 
@@ -42,14 +45,16 @@ The list of the projects:
 ````
 
 ## Additional Steps
-### A. Prepare Info.plist
-[COMING SOON]
+### Prepare Info.plist
+Pleaser follow the content in the info.plist like the image bellow:
+<p align="center"><img width="1253" alt="Screenshot 2022-12-21 at 22 03 05" src="https://user-images.githubusercontent.com/32255348/208937559-bddec095-40c3-457f-90ed-a5a3942f9af2.png"></p>
+The location of info.plist should be in Gametopia/Gametopia/Supporting Files/info.plist
 
 ## Results for App 
 Berikut adalah hasil preview untuk final App Gametopia, yang dimana merupakan hasil dari final submission pada kelas 'Menjadi iOS Developer Expert' di Dicoding Indonesia.
 | Action      | Preview  |
 | :-: | :-: |
-| Home Tab Screen | [COMING SOON] |
+| Home Tab Screen | <p align="center"><image src="https://user-images.githubusercontent.com/32255348/208938153-36c154d5-f1c3-4c4d-ad9c-fbf9e150de04.png" width= 200 /></p> |
 | Search Tab Screen | [COMING SOON] |
 | My Favorite Tab Screen | [COMING SOON] |
 | Profile Tab Screen | [COMING SOON] |
